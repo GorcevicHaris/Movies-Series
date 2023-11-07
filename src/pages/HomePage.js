@@ -9,16 +9,36 @@ import Card from "../components/Card";
 // http://www.omdbapi.com/?i=tt3896198&apikey=92faf84a
 export default function HomePage() {
   const [data, setData] = useState([]);
-  const [searh, setSearch] = useState();
+  const [secondData, setSecondData] = useState([]);
+  const [search, setSearch] = useState("");
+
+  // Funkcija za dobijanje prvih podataka
   function getData() {
     axios
       .get(`https://dummyjson.com/products`)
       .then((response) => setData(response.data.products));
   }
+
+  // Funkcija za dobijanje drugih podataka na osnovu pretrage
+  function getSecondData() {
+    if (search) {
+      // Provera da li je 'search' prazan
+      axios
+        .get(`https://dummyjson.com/products/categories/search?q=${search}`)
+        .then((response) => setSecondData(response.data));
+    }
+  }
+
+  // Efekat koji se izvršava kada se komponenta montira
   useEffect(() => {
     getData();
-  }, [searh]);
-  console.log(data);
+  }, []);
+
+  // Efekat koji se izvršava kada se promeni 'search'
+  useEffect(() => {
+    getSecondData();
+  }, [search]); // Pokreće se efekat svaki put kada se 'search' promeni
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -39,12 +59,14 @@ export default function HomePage() {
             p: "20px",
           }}
         >
-          <input></input>
-
-          {data.map((el) => (
-            <Card product={el} />
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          ></input>
+          <button onClick={getSecondData}>Pretraga</button>
+          {secondData.map((el) => (
+            <Card product={el} /> // Ovde se prikazuju podaci koji su pronađeni u pretrazi
           ))}
-          {/* <button onClick={getData}>Clicker</button> */}
         </Box>
       </Container>
     </React.Fragment>
