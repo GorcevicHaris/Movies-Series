@@ -7,3 +7,16 @@ button{
     width: 100px;
     height: 100px;
 }
+input {
+    width: 300xp;
+    height: 20px;
+}
+.card{
+    width: 250px;
+    height: 250px;
+    background-color: yellow;
+    
+}
+h1{
+    font-size: 13px;
+}
