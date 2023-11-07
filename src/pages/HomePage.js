@@ -4,12 +4,12 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import axios from "axios";
 import { useState } from "react";
+import "./homepage.css";
+// http://www.omdbapi.com/?i=tt3896198&apikey=92faf84a
 export default function HomePage() {
   const [data, setData] = useState([]);
   function getData() {
-    axios
-      .get(`https://imdb-api.com/en/API/Top250Movies/k_12345678`)
-      .then((response) => setData(response));
+    axios.get(``).then((response) => setData(response.data));
   }
   console.log(data);
   return (
@@ -27,7 +27,7 @@ export default function HomePage() {
             flexWrap: "wrap",
           }}
         >
-          <button onClick={getData}></button>
+          <button onClick={getData}>Clicker</button>
         </Box>
       </Container>
     </React.Fragment>
