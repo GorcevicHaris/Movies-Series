@@ -12,31 +12,18 @@ export default function HomePage() {
   const [secondData, setSecondData] = useState([]);
   const [search, setSearch] = useState("");
 
-  // Funkcija za dobijanje prvih podataka
+  const url = "https://imdb-top-100-movies.p.rapidapi.com/top32";
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "1b2013684fmsh5e2154cde374d29p1987b9jsnf9a0e60af14e",
+      "X-RapidAPI-Host": "imdb-top-100-movies.p.rapidapi.com",
+    },
+  };
   function getData() {
-    axios
-      .get(`https://dummyjson.com/products/search?q=${search}`)
-      .then((response) => setData(response.data.products));
+    axios.get((url, options)).then((response) => setData(response));
   }
-
-  // Funkcija za dobijanje drugih podataka na osnovu pretrage
-  // function getSecondData() {
-  //   // Provera da li je 'search' prazan
-  //   axios
-  //     .get(`https://dummyjson.com/products/search?q=${search}`)
-  //     .then((response) => setSecondData(response.data));
-  // }
   console.log(data);
-
-  // Efekat koji se izvršava kada se komponenta montira
-  useEffect(() => {
-    getData();
-  }, [search]);
-
-  // useEffect(() => {
-  //   getSecondData();
-  // }, [search]);
-  console.log(search);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -57,8 +44,7 @@ export default function HomePage() {
             p: "20px",
           }}
         >
-          <input onChange={(e) => setSearch(e.target.value)}></input>
-          <button onClick={getData}>Pretraga</button>
+          <button onClick={getData}></button>
           {data.map((el) => (
             <Card product={el} />
           ))}
