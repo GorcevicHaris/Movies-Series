@@ -15,30 +15,28 @@ export default function HomePage() {
   // Funkcija za dobijanje prvih podataka
   function getData() {
     axios
-      .get(`https://dummyjson.com/products`)
+      .get(`https://dummyjson.com/products/search?q=${search}`)
       .then((response) => setData(response.data.products));
   }
 
   // Funkcija za dobijanje drugih podataka na osnovu pretrage
-  function getSecondData() {
-    if (search) {
-      // Provera da li je 'search' prazan
-      axios
-        .get(`https://dummyjson.com/products/categories/search?q=${search}`)
-        .then((response) => setSecondData(response.data));
-    }
-  }
+  // function getSecondData() {
+  //   // Provera da li je 'search' prazan
+  //   axios
+  //     .get(`https://dummyjson.com/products/search?q=${search}`)
+  //     .then((response) => setSecondData(response.data));
+  // }
+  console.log(data);
 
   // Efekat koji se izvršava kada se komponenta montira
   useEffect(() => {
     getData();
-  }, []);
+  }, [search]);
 
-  // Efekat koji se izvršava kada se promeni 'search'
-  useEffect(() => {
-    getSecondData();
-  }, [search]); // Pokreće se efekat svaki put kada se 'search' promeni
-
+  // useEffect(() => {
+  //   getSecondData();
+  // }, [search]);
+  console.log(search);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -46,7 +44,7 @@ export default function HomePage() {
         <Box
           sx={{
             bgcolor: "#cfe8fc",
-            minHeight: "auto",
+            minHeight: "200vh",
             bgcolor: "red",
             width: "100vw",
             margin: 0,
@@ -59,13 +57,10 @@ export default function HomePage() {
             p: "20px",
           }}
         >
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          ></input>
-          <button onClick={getSecondData}>Pretraga</button>
-          {secondData.map((el) => (
-            <Card product={el} /> // Ovde se prikazuju podaci koji su pronađeni u pretrazi
+          <input onChange={(e) => setSearch(e.target.value)}></input>
+          <button onClick={getData}>Pretraga</button>
+          {data.map((el) => (
+            <Card product={el} />
           ))}
         </Box>
       </Container>
