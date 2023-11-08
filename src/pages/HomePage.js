@@ -16,7 +16,7 @@ export default function HomePage() {
   function getData() {
     axios
       .get(`https://kitsu.io/api/edge/anime?page[limit]=20`)
-      .then((response) => setData(response.data));
+      .then((response) => setData(response.data.data));
   }
   useEffect(() => {
     getData();
@@ -30,8 +30,7 @@ export default function HomePage() {
           sx={{
             bgcolor: "#cfe8fc",
             minHeight: "auto",
-            bgcolor: "red",
-            width: "100vw",
+            width: "98.6vw",
             margin: 0,
             padding: 0,
             display: "flex",

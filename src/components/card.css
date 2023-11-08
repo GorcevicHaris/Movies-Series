@@ -6,5 +6,8 @@
 .card{
     width: 250px;
     height: 250px;
-    background-color: yellow;
+    background: url(/public/logo512.png);
+    background-size: 100%;
+    border-bottom:1px solid black ;
+    border-right: 1px solid black;
 }
