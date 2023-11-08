@@ -6,24 +6,20 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import "./homepage.css";
 import Card from "../components/Card";
+//da prezentujem
 // http://www.omdbapi.com/?i=tt3896198&apikey=92faf84a
 export default function HomePage() {
   const [data, setData] = useState([]);
   const [secondData, setSecondData] = useState([]);
   const [search, setSearch] = useState("");
 
-  const url = "https://imdb-top-100-movies.p.rapidapi.com/top32";
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "1b2013684fmsh5e2154cde374d29p1987b9jsnf9a0e60af14e",
-      "X-RapidAPI-Host": "imdb-top-100-movies.p.rapidapi.com",
-    },
-  };
   function getData() {
-    axios.get((url, options)).then((response) => setData(response));
+    axios
+      .get(`https://kitsu.io/api/edge/anime?page[limit]=20`)
+      .then((response) => setData(response.data.data));
   }
   console.log(data);
+  console.log(object);
   return (
     <React.Fragment>
       <CssBaseline />
