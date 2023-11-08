@@ -16,10 +16,12 @@ export default function HomePage() {
   function getData() {
     axios
       .get(`https://kitsu.io/api/edge/anime?page[limit]=20`)
-      .then((response) => setData(response.data.data));
+      .then((response) => setData(response.data));
   }
+  useEffect(() => {
+    getData();
+  }, []);
   console.log(data);
-  console.log(object);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -27,7 +29,7 @@ export default function HomePage() {
         <Box
           sx={{
             bgcolor: "#cfe8fc",
-            minHeight: "200vh",
+            minHeight: "auto",
             bgcolor: "red",
             width: "100vw",
             margin: 0,
@@ -40,7 +42,6 @@ export default function HomePage() {
             p: "20px",
           }}
         >
-          <button onClick={getData}></button>
           {data.map((el) => (
             <Card product={el} />
           ))}

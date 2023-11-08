@@ -8,6 +8,7 @@ function Card({ product }) {
       <h1>{product.description}</h1>
       <h1>{product.brand}</h1>
       <h1>{product.type}</h1>
+      <a href={product.links.self}>link</a>
     </div>
   );
 }
