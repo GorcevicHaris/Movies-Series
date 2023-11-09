@@ -11,10 +11,10 @@ import Card from "../components/Card";
 export default function HomePage() {
   const [data, setData] = useState([]);
   const [pagee, setPage] = useState(1);
-
+  const [search, setSearch] = useState("");
   const options = {
     method: "GET",
-    url: "https://api.themoviedb.org/3/discover/movie",
+    url: `https://api.themoviedb.org/3/discover/movie?query=${search}`,
     params: {
       include_adult: "false",
       include_video: "false",
@@ -28,7 +28,7 @@ export default function HomePage() {
         "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
     },
   };
-
+  console.log(search);
   function getData() {
     axios
       .request(options)
@@ -43,6 +43,10 @@ export default function HomePage() {
   useEffect(() => {
     getData();
   }, [pagee]);
+  console.log(data);
+  useEffect(() => {
+    getData();
+  }, [search]);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -63,6 +67,7 @@ export default function HomePage() {
             gap: "10px",
           }}
         >
+          <input onChange={(e) => setSearch(e.target.value)}></input>
           <button
             onClick={() => {
               setPage(pagee + 1);
