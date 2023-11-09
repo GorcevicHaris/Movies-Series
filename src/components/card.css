@@ -4,10 +4,10 @@
     box-sizing: border-box;
 }
 .card{
-    width: 250px;
-    height: 250px;
     background: url(/public/logo512.png);
     background-size: 100%;
     border-bottom:1px solid black ;
     border-right: 1px solid black;
+    width: auto;
+    height: auto;
 }
