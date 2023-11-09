@@ -3,9 +3,10 @@ import React, { createContext, useState } from "react";
 const Kontext = createContext();
 
 function ContextFunction({ children }) {
-  const [search, setSearch, Data] = useState("");
+  const [search, setSearch] = useState("");
+  const [data, setData] = useState("");
   return (
-    <Kontext.Provider value={{ search, setSearch, Data }}>
+    <Kontext.Provider value={{ search, setSearch, data, setData }}>
       {children}
     </Kontext.Provider>
   );
