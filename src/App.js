@@ -1,18 +1,21 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import Header from "./pages/Header";
+import Layout from "./pages/Layout";
+import ContextFunction from "./pages/Context";
 
 function App() {
   return (
     <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-      </Routes>
+      <ContextFunction>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+          </Routes>
+        </Layout>
+      </ContextFunction>
     </BrowserRouter>
   );
 }
 
 export default App;
- 

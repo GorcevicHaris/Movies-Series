@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-
+import { Kontext } from "./Context";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -52,6 +52,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
+  const { setSearch } = React.useContext(Kontext);
+  const [value, setValue] = React.useState("");
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      setSearch(value);
+    }
+  };
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -79,7 +86,9 @@ export default function Header() {
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
+              onChange={(e) => setValue(e.target.value)}
               inputProps={{ "aria-label": "search" }}
+              onKeyDown={handleKeyDown}
             />
           </Search>
         </Toolbar>
