@@ -9,7 +9,8 @@ import InputBase from "@mui/material/InputBase";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { Kontext } from "./Context";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import HomePage from "./HomePage";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -53,11 +54,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
+  const navigate = useNavigate();
   const { setSearch } = React.useContext(Kontext);
   const [value, setValue] = React.useState("");
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       setSearch(value);
+      navigate("/");
     }
   };
   return (
@@ -92,7 +95,7 @@ export default function Header() {
               onChange={(e) => setValue(e.target.value)}
               inputProps={{ "aria-label": "search" }}
               onKeyDown={handleKeyDown}
-            />
+            ></StyledInputBase>
           </Search>
         </Toolbar>
       </AppBar>

@@ -39,7 +39,7 @@ export default function Data() {
   };
 
   return (
-    <Card sx={{ maxWidth: 500 }}>
+    <Card sx={{ maxWidth: 400 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -56,7 +56,7 @@ export default function Data() {
       />
       <CardMedia
         component="img"
-        height="450"
+        height="500"
         sx={{ borderRadius: 0 }}
         image={`https://image.tmdb.org/t/p/w342${data.poster_path}`}
         alt="Paella dish"
