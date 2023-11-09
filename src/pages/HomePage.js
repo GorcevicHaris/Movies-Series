@@ -16,51 +16,27 @@ export default function HomePage() {
   const { search } = useContext(Kontext);
   const [data, setData] = useState([]);
   const [pagee, setPage] = useState(1);
-  const options = {
-    method: "GET",
-    url: `https://api.themoviedb.org/3/discover/movie`,
-    params: {
-      include_adult: "false",
-      include_video: "false",
-      language: "en-US",
-      page: pagee,
-      sort_by: "popularity.desc",
-    },
-    headers: {
-      accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
-    },
-  };
-  function getSearchData() {
-    const options = {
-      method: "GET",
-      url: "https://api.themoviedb.org/3/search/movie",
-      params: {
-        query: search,
-        include_adult: "false",
-        language: "en-US",
-        page: "1",
-      },
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
-      },
-    };
-    axios
-      .request(options)
-      .then(function (response) {
-        setData(response.data.results);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-  }
-  console.log(search);
+
   function getData() {
     axios
-      .request(options)
+      .get(
+        `https://api.themoviedb.org/3/${search ? "search" : "discover"}/movie`,
+        {
+          params: {
+            query: search,
+            include_adult: "false",
+            include_video: "false",
+            language: "en-US",
+            page: pagee,
+            sort_by: "popularity.desc",
+          },
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
+          },
+        }
+      )
       .then(function (response) {
         setData(response.data.results);
       })
@@ -68,17 +44,10 @@ export default function HomePage() {
         console.error(error);
       });
   }
-  console.log(data);
-  useEffect(() => {
-    getData();
-  }, [pagee]);
 
   useEffect(() => {
-    {
-      search.length > 0 ? getSearchData() : console.log("asd");
-    }
+    getData();
   }, [search]);
-  console.log(data);
 
   return (
     <React.Fragment>
