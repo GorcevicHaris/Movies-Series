@@ -60,8 +60,12 @@ export default function Header() {
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       setSearch(value);
+      setValue("");
       navigate("/");
     }
+  };
+  const handleMUILinkClick = () => {
+    setSearch(""); //
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -82,7 +86,11 @@ export default function Header() {
             component="div"
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
-            <Link style={{ textDecoration: "none", color: "white " }} to={"/"}>
+            <Link
+              onClick={handleMUILinkClick}
+              style={{ textDecoration: "none", color: "white " }}
+              to={"/"}
+            >
               MUI
             </Link>
           </Typography>
@@ -95,6 +103,7 @@ export default function Header() {
               onChange={(e) => setValue(e.target.value)}
               inputProps={{ "aria-label": "search" }}
               onKeyDown={handleKeyDown}
+              value={value}
             ></StyledInputBase>
           </Search>
         </Toolbar>

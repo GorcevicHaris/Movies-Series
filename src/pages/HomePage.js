@@ -7,6 +7,7 @@ import { useState, useEffect, useContext } from "react";
 import "./homepage.css";
 import Card from "../components/Card";
 import { Kontext } from "./Context";
+import { useNavigate } from "react-router-dom";
 //da prezentujem
 // http://www.omdbapi.com/?i=tt3896198&apikey=92faf84a
 //api.themoviedb.org/ to je API
