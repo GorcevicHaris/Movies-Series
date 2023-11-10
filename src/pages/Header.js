@@ -20,10 +20,13 @@ const Search = styled("div")(({ theme }) => ({
   },
   marginLeft: 0,
   width: "100%",
+  boxSizing: "border-box",
+
   margin: "0",
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(5),
     width: "auto",
+    boxSizing: "border-box",
   },
 }));
 
@@ -33,6 +36,8 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   position: "absolute",
   pointerEvents: "none",
   display: "flex",
+  margin: 0,
+  boxSizing: "border-box",
   alignItems: "center",
   justifyContent: "center",
 }));
@@ -46,9 +51,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      width: "12ch",
+      width: "17ch",
       "&:focus": {
-        width: "20ch",
+        width: "25ch",
       },
     },
   },
@@ -70,7 +75,15 @@ export default function Header() {
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar sx={{ bgcolor: "black" }} position="static">
+      <AppBar
+        sx={{
+          bgcolor: "black",
+          margin: 0,
+          padding: "0",
+          borderBottom: "10px solid ",
+        }}
+        position="static"
+      >
         <Toolbar>
           <IconButton
             size="large"
