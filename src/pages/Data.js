@@ -45,6 +45,7 @@ export default function Data() {
 
   const cardStyle = {
     maxWidth: 450,
+    zIndex: 10,
   };
   console.log(data);
   return (
