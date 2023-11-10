@@ -38,9 +38,18 @@ export default function Data() {
     setExpanded(!expanded);
   };
 
+  const cardBackgroundStyle = {
+    backgroundImage: `url(https://image.tmdb.org/t/p/w342${data.backdrop_path})`,
+    backgroundRepeat: "no-repeat",
+  };
+
+  const cardStyle = {
+    maxWidth: 450,
+  };
+  console.log(data);
   return (
-    <div className="data">
-      <Card sx={{ maxWidth: 450, bgcolor: "white" }}>
+    <div style={cardBackgroundStyle} className="data">
+      <Card sx={cardStyle}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
