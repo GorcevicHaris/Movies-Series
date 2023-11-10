@@ -1,12 +1,12 @@
 import React from "react";
 import Header from "./Header";
-
+import Footer from "./Footer";
 export default function Layout({ children }) {
   return (
     <div>
       <Header />
       {children}
-      <div className="footer">footer</div>
+      <Footer />
     </div>
   );
 }

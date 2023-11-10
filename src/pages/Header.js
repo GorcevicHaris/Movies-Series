@@ -20,8 +20,9 @@ const Search = styled("div")(({ theme }) => ({
   },
   marginLeft: 0,
   width: "100%",
+  margin: "0",
   [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
+    marginLeft: theme.spacing(5),
     width: "auto",
   },
 }));
@@ -65,11 +66,11 @@ export default function Header() {
     }
   };
   const handleMUILinkClick = () => {
-    setSearch(""); //
+    setSearch("");
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar sx={{ bgcolor: "black" }} position="static">
         <Toolbar>
           <IconButton
             size="large"
@@ -91,7 +92,7 @@ export default function Header() {
               style={{ textDecoration: "none", color: "white " }}
               to={"/"}
             >
-              MUI
+              MOVIES
             </Link>
           </Typography>
           <Search>
