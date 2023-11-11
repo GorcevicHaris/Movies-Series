@@ -17,7 +17,7 @@ import Stack from "@mui/material/Stack";
 ///3/discover/movie to je API call
 export default function HomePage() {
   const { search, pagee, setPage } = useContext(Kontext);
-
+  const [result, setResult] = useState(10);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const handlePageChange = (event, newPage) => {
@@ -60,7 +60,7 @@ export default function HomePage() {
   useEffect(() => {
     getData();
   }, [search, pagee]);
-
+  console.log(data);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -86,7 +86,7 @@ export default function HomePage() {
           </div>
           <div className="datas">
             {data.length > 0 ? (
-              data.map((el) => <Card product={el} />)
+              data.slice(0, 10).map((el) => <Card product={el} />)
             ) : (
               <div className="no-data">
                 <h1 style={{ fontSize: "31px" }}>
