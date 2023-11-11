@@ -16,7 +16,8 @@ import Stack from "@mui/material/Stack";
 //api.themoviedb.org/ to je API
 ///3/discover/movie to je API call
 export default function HomePage() {
-  const { search, pagee, setPage } = useContext(Kontext);
+  const { search, pagee, setPage, secondData, setSecondData } =
+    useContext(Kontext);
   const [result, setResult] = useState(10);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ export default function HomePage() {
       behavior: "smooth",
     });
   };
-  function getData() {
+  function getMoviesData() {
     axios
       .get(
         `https://api.themoviedb.org/3/${search ? "search" : "discover"}/movie`,
@@ -49,16 +50,34 @@ export default function HomePage() {
           },
         }
       )
-      .then(function (response) {
-        setData(response.data.results);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
+      .then((response) => setData(response.data.results));
   }
-
+  function getTvData() {
+    axios
+      .get(
+        `https://api.themoviedb.org/3/${search ? "search" : "discover"}/tv`,
+        {
+          params: {
+            query: search,
+            include_adult: "false",
+            include_video: "false",
+            language: "en-US",
+            page: pagee,
+            sort_by: "popularity.desc",
+          },
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
+          },
+        }
+      )
+      .then((response) => setSecondData(response.data.results));
+  }
+  console.log(secondData);
   useEffect(() => {
-    getData();
+    getMoviesData();
+    getTvData();
   }, [search, pagee]);
   console.log(data);
   return (
@@ -85,6 +104,9 @@ export default function HomePage() {
             {/* <input onChange={(e) => setSearch(e.target.value)}></input> */}
           </div>
           <div className="datas">
+            {secondData.length > 0
+              ? secondData.slice(0, 10).map((el) => <Card product={el} />)
+              : ""}
             {data.length > 0 ? (
               data.slice(0, 10).map((el) => <Card product={el} />)
             ) : (

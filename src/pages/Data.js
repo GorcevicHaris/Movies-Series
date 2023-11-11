@@ -87,19 +87,23 @@ export default function Data() {
             </Typography>
           }
         />
-        <CardMedia
-          component="img"
-          height="auto"
-          sx={{
-            borderRadius: 0,
-            transform: "scale(1)",
-            color: "white",
-            filter: "brightness(0.8)",
-          }}
-          image={`https://image.tmdb.org/t/p/w342${data.backdrop_path}`}
-          alt="Paella dish"
-          color="white"
-        />
+        {data.backdrop_path ? (
+          <CardMedia
+            component="img"
+            height="auto"
+            sx={{
+              borderRadius: 0,
+              transform: "scale(1)",
+              color: "white",
+              filter: "brightness(0.8)",
+            }}
+            image={`https://image.tmdb.org/t/p/w342${data.backdrop_path}`}
+            alt="Paella dish"
+            color="white"
+          />
+        ) : (
+          ""
+        )}
         <CardContent>
           <Typography variant="body2" color="white">
             {data.overview}
