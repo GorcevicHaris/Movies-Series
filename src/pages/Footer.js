@@ -17,23 +17,39 @@ export default function Footer() {
           <div class="footer-title">PRODUCTS</div>
           <ul class="footer-list">
             <li>
-              <a class="footer-link" href="https://angular.io/">
-                Angular
+              <a
+                class="footer-link"
+                target="_blank"
+                href="https://www.animesrbija.com/"
+              >
+                Anime Srbija
               </a>
             </li>
             <li>
-              <a class="footer-link" href="https://react.dev/">
-                React
+              <a
+                class="footer-link"
+                target="_blank"
+                href="https://www.filmovi.me/"
+              >
+                Filmovizija
               </a>
             </li>
             <li>
-              <a class="footer-link" href="https://vuejs.org/">
-                Vue
+              <a
+                class="footer-link"
+                target="_blank"
+                href="https://www.popcornfilmovi.com/"
+              >
+                Pop Corn
               </a>
             </li>
             <li>
-              <a class="footer-link" href="https://laravel.com/">
-                Laravel
+              <a
+                class="footer-link"
+                target="_blank"
+                href="https://gledalica.online/"
+              >
+                Gledalica
               </a>
             </li>
           </ul>
@@ -65,15 +81,6 @@ export default function Footer() {
         </div>
         <div class="footer-column">
           <div class="footer-title">CONTACT</div> <p>Autor: Haris Gorcevic</p>
-          <p>
-            <span class="github-icon"></span> GitHub:
-            <a
-              style={{ color: "white" }}
-              href="https://github.com/GorcevicHaris"
-            >
-              Gorcevic Haris
-            </a>
-          </p>
           <p>Serbia,Novi Pazar</p> <p>© 2023 Vaša Kompanija</p>
           <p>
             <span class="email-icon"></span> Kontakt:

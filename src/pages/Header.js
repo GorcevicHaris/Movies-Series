@@ -80,7 +80,7 @@ export default function Header() {
           bgcolor: "black",
           margin: 0,
           padding: "0",
-          borderBottom: "10px solid rgb(35,35,35) ",
+          borderBottom: "4px solid rgb(35,35,35) ",
         }}
         position="static"
       >
