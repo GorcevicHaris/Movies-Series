@@ -129,12 +129,13 @@ export default function HomePage() {
                 width: "50px",
                 height: "30px",
                 color: "white",
-                border: "1px solid #505050",
+                border: "0.1px solid #505050",
                 borderRadius: 0,
               },
               "& .Mui-selected": {
-                bgcolor: "#505050",
+                bgcolor: "#404040",
                 border: "1px solid #909090",
+
                 // Stilovi za označenu (trenutnu) stranicu
               },
             }}
