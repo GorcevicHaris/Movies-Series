@@ -90,10 +90,11 @@ export default function HomePage() {
             ) : (
               <div className="no-data">
                 <h1 style={{ fontSize: "31px" }}>
-                  No result found for "{search}".
+                  No result found for "<span>{search}</span>"".
                 </h1>
                 <h1>
-                  Please try searching by move or series name,actor or character
+                  Please try searching by movie or series name,actor or
+                  character
                 </h1>
               </div>
             )}
