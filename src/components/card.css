@@ -9,11 +9,11 @@
     width: auto;
     height: auto;
 }
-img{
+.images{
     border-radius: 20px;
     transition: .3s;;
 }
 
-img:hover {
+.images:hover {
     transform: scale(1.03);
 }

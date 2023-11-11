@@ -19,7 +19,10 @@ function Card({ product }) {
       {/* <h1>{product.attributes.createdAt}</h1> */}
       {/* <h6 style={{ fontSize: "7px" }}>{product.attributes.description}</h6>
       <a href={product.links.self}>link</a> */}
-      <img src={`https://image.tmdb.org/t/p/w342${product.poster_path}`}></img>
+      <img
+        className="images"
+        src={`https://image.tmdb.org/t/p/w342${product.poster_path}`}
+      ></img>
       {/* <h1>{product.poster_path}</hx 1> */}
     </div>
   );

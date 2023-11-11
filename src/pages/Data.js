@@ -43,10 +43,6 @@ export default function Data() {
     backgroundImage: `url(https://image.tmdb.org/t/p/w342${data.backdrop_path})`,
     backgroundRepeat: "no-repeat",
   };
-  const img = {
-    backgroundImage: `url(https://image.tmdb.org/t/p/w342${data.backdrop_path})`,
-  };
-
   const cardStyle = {
     maxWidth: 750,
     maxHeight: "auto",
@@ -58,23 +54,33 @@ export default function Data() {
     <div style={cardBackgroundStyle} className="data">
       <Card sx={cardStyle}>
         <CardHeader
-          avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              R
-            </Avatar>
-          }
           action={
             <IconButton aria-label="settings">
               <MoreVertIcon />
             </IconButton>
           }
-          title={data.title}
+          title={
+            <Typography
+              variant="h5"
+              sx={{
+                color: "yourColor",
+                fontWeight: "bold",
+                fontFamily: "initial",
+                fontSize: "27px",
+              }}
+            >
+              {data.title}
+            </Typography>
+          }
           subheader={data.release_date}
         />
         <CardMedia
           component="img"
           height="auto"
-          sx={{ borderRadius: 0 }}
+          sx={{
+            borderRadius: 0,
+            transform: "scale(1)",
+          }}
           image={`https://image.tmdb.org/t/p/w342${data.backdrop_path}`}
           alt="Paella dish"
         />
@@ -104,7 +110,9 @@ export default function Data() {
             <Typography color="text.secondary" paragraph>
               <div className="stars">
                 <ReactStars count={10} size={30} value={data.vote_average} />
-                Votes:{data.vote_count}
+                Votes: {data.vote_count}
+                <br />
+                Viewers: {data.popularity}
               </div>
             </Typography>
           </CardContent>
