@@ -17,3 +17,6 @@
 .images:hover {
     transform: scale(1.03);
 }
+h1{
+    color: white;
+}

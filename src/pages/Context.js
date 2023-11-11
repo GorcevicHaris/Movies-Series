@@ -5,8 +5,11 @@ const Kontext = createContext();
 function ContextFunction({ children }) {
   const [search, setSearch] = useState("");
   const [data, setData] = useState("");
+  const [pagee, setPage] = useState(1);
   return (
-    <Kontext.Provider value={{ search, setSearch, data, setData }}>
+    <Kontext.Provider
+      value={{ search, setSearch, data, setData, pagee, setPage }}
+    >
       {children}
     </Kontext.Provider>
   );

@@ -61,7 +61,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Header() {
   const navigate = useNavigate();
-  const { setSearch } = React.useContext(Kontext);
+  const { setSearch, setPage, data } = React.useContext(Kontext);
   const [value, setValue] = React.useState("");
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -72,6 +72,7 @@ export default function Header() {
   };
   const handleMUILinkClick = () => {
     setSearch("");
+    setPage(1);
   };
   return (
     <Box sx={{ flexGrow: 1 }}>

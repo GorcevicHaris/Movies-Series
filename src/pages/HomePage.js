@@ -16,10 +16,19 @@ import Stack from "@mui/material/Stack";
 //api.themoviedb.org/ to je API
 ///3/discover/movie to je API call
 export default function HomePage() {
-  const { search } = useContext(Kontext);
-  const [data, setData] = useState([]);
-  const [pagee, setPage] = useState(1);
+  const { search, pagee, setPage } = useContext(Kontext);
 
+  const [data, setData] = useState([]);
+  const navigate = useNavigate();
+  const handlePageChange = (event, newPage) => {
+    console.log("event-", event, newPage);
+    setPage(newPage);
+    // Scroll to the top of the page
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
   function getData() {
     axios
       .get(
@@ -76,18 +85,39 @@ export default function HomePage() {
             {/* <input onChange={(e) => setSearch(e.target.value)}></input> */}
           </div>
           <div className="datas">
-            {data.map((el) => (
-              <Card product={el} />
-            ))}
+            {data.length > 0 ? (
+              data.map((el) => <Card product={el} />)
+            ) : (
+              <div className="no-data">
+                <h1 style={{ fontSize: "31px" }}>
+                  No result found for "{search}".
+                </h1>
+                <h1>
+                  Please try searching by move or series name,actor or character
+                </h1>
+              </div>
+            )}
           </div>
-          <Stack spacing={2}>
-            <Pagination
-              sx={{ color: "white", bgcolor: "gray" }}
-              count={1000}
-              shape="rounded"
-              onClick={() => setPage(pagee + 1)}
-            />
-          </Stack>
+
+          <Pagination
+            sx={{
+              "& .MuiPaginationItem-root": {
+                // Stilovi za pozadinu pojedinačnih dugmadi stranice
+                width: "50px",
+                height: "30px",
+                color: "white",
+                border: "1px solid #505050",
+                borderRadius: 0,
+              },
+              "& .Mui-selected": {
+                bgcolor: "#505050",
+                border: "1px solid #909090",
+                // Stilovi za označenu (trenutnu) stranicu
+              },
+            }}
+            count={500}
+            onChange={handlePageChange}
+          />
           {/* <button
             onClick={() => {
               setPage(pagee + 1);

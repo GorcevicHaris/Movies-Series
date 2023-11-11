@@ -19,6 +19,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { colors } from "@mui/material";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -47,7 +48,8 @@ export default function Data() {
     maxWidth: 750,
     maxHeight: "auto",
     zIndex: 10,
-    backgroundColor: "white",
+    backgroundColor: "#484848",
+    color: "white",
   };
   console.log(data);
   return (
@@ -67,12 +69,23 @@ export default function Data() {
                 fontWeight: "bold",
                 fontFamily: "initial",
                 fontSize: "27px",
+                color: "white",
               }}
             >
               {data.title}
             </Typography>
           }
-          subheader={data.release_date}
+          subheader={
+            <Typography
+              variant="subtitle1"
+              sx={{
+                color: "#808080", // Replace "yourSubheaderColor" with your desired color
+                fontSize: "16px",
+              }}
+            >
+              {data.release_date}
+            </Typography>
+          }
         />
         <CardMedia
           component="img"
@@ -80,12 +93,15 @@ export default function Data() {
           sx={{
             borderRadius: 0,
             transform: "scale(1)",
+            color: "white",
+            filter: "brightness(0.8)",
           }}
           image={`https://image.tmdb.org/t/p/w342${data.backdrop_path}`}
           alt="Paella dish"
+          color="white"
         />
         <CardContent>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" color="white">
             {data.overview}
           </Typography>
         </CardContent>
@@ -107,7 +123,7 @@ export default function Data() {
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography color="text.secondary" paragraph>
+            <Typography color="white" paragraph>
               <div className="stars">
                 <ReactStars count={10} size={30} value={data.vote_average} />
                 Votes: {data.vote_count}
