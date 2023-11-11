@@ -8,6 +8,9 @@ import "./homepage.css";
 import Card from "../components/Card";
 import { Kontext } from "./Context";
 import { useNavigate } from "react-router-dom";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
+
 //da prezentujem
 // http://www.omdbapi.com/?i=tt3896198&apikey=92faf84a
 //api.themoviedb.org/ to je API
@@ -47,7 +50,7 @@ export default function HomePage() {
 
   useEffect(() => {
     getData();
-  }, [search]);
+  }, [search, pagee]);
 
   return (
     <React.Fragment>
@@ -77,6 +80,14 @@ export default function HomePage() {
               <Card product={el} />
             ))}
           </div>
+          <Stack spacing={2}>
+            <Pagination
+              sx={{ color: "white", bgcolor: "gray" }}
+              count={1000}
+              shape="rounded"
+              onClick={() => setPage(pagee + 1)}
+            />
+          </Stack>
           {/* <button
             onClick={() => {
               setPage(pagee + 1);
