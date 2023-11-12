@@ -6,7 +6,8 @@ function ContextFunction({ children }) {
   const [search, setSearch] = useState("");
   const [data, setData] = useState("");
   const [pagee, setPage] = useState(1);
-  const [genre, setGenre] = useState([]);
+  const [tvGenre, setTvGenre] = useState([]);
+  const [movieGenre, setMovieGenre] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
   const [secondData, setSecondData] = useState([]);
   return (
@@ -20,8 +21,10 @@ function ContextFunction({ children }) {
         setPage,
         secondData,
         setSecondData,
-        genre,
-        setGenre,
+        movieGenre,
+        setMovieGenre,
+        tvGenre,
+        setTvGenre,
         selectedGenre,
         setSelectedGenre,
       }}

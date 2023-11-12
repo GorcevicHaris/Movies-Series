@@ -22,13 +22,16 @@ export default function HomePage() {
     setPage,
     secondData,
     setSecondData,
-    genre,
-    setGenre,
+    tvGenre,
+    setTvGenre,
+    movieGenre,
+    setMovieGenre,
     selectedGenre,
     setSelectedGenre,
   } = useContext(Kontext);
-  const [result, setResult] = useState(10);
   const [data, setData] = useState([]);
+  const [filterGenre1, setFilterGenre1] = useState([]);
+  const [filterGenre2, setFilterGenre2] = useState([]);
   const navigate = useNavigate();
   const handlePageChange = (event, newPage) => {
     console.log("event-", event, newPage);
@@ -51,7 +54,6 @@ export default function HomePage() {
             language: "en-US",
             page: pagee,
             sort_by: "popularity.desc",
-            with_genres: selectedGenre,
           },
           headers: {
             accept: "application/json",
@@ -60,8 +62,21 @@ export default function HomePage() {
           },
         }
       )
-      .then((response) => setData(response.data.results));
+      .then((response) => {
+        setData(response.data.results);
+        const maper = response.data.results;
+        const newmaper = maper.map((el) => el.genre_ids);
+        const uniqueArray = [...new Set(newmaper)];
+
+        // Konvertuj matricu u jednodimenzionalni niz
+        const flatArray = uniqueArray.flat(Infinity);
+        const uniqueSet = new Set(flatArray);
+        const unique = Array.from(uniqueSet);
+
+        setFilterGenre1(unique);
+      });
   }
+  console.log(filterGenre1);
   function getTvData() {
     axios
       .get(
@@ -74,7 +89,6 @@ export default function HomePage() {
             language: "en-US",
             page: pagee,
             sort_by: "popularity.desc",
-            with_genres: selectedGenre,
           },
           headers: {
             accept: "application/json",
@@ -83,17 +97,63 @@ export default function HomePage() {
           },
         }
       )
-      .then((response) => setSecondData(response.data.results));
+      .then((response) => {
+        setSecondData(response.data.results);
+        let Array = [...new Set(response.data.results.genre_ids)];
+        setFilterGenre2(Array);
+      });
   }
+  console.log(filterGenre1);
+  console.log(filterGenre2);
+
+  function getTvGenre() {
+    axios
+      .get(`https://api.themoviedb.org/3/genre/tv/list`, {
+        params: {
+          query: search,
+          include_adult: "false",
+          include_video: "false",
+          language: "en-US",
+          page: pagee,
+          sort_by: "popularity.desc",
+        },
+        headers: {
+          accept: "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
+        },
+      })
+      .then((response) => setTvGenre(response.data.genres));
+  }
+  function getMovieGenre() {
+    axios
+      .get(`https://api.themoviedb.org/3/genre/movie/list`, {
+        params: {
+          query: search,
+          include_adult: "false",
+          include_video: "false",
+          language: "en-US",
+          page: pagee,
+          sort_by: "popularity.desc",
+        },
+        headers: {
+          accept: "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
+        },
+      })
+      .then((response) => setMovieGenre(response.data.genres));
+  }
+  console.log(tvGenre);
+  console.log(movieGenre);
   console.log(secondData);
   useEffect(() => {
     getMoviesData();
     getTvData();
+    getMovieGenre();
+    getTvGenre();
   }, [search, pagee, selectedGenre]);
-  useEffect(() => {
-    getMoviesData();
-    getTvData();
-  }, []);
+
   console.log(data);
   return (
     <React.Fragment>
@@ -115,18 +175,9 @@ export default function HomePage() {
             gap: "10px",
           }}
         >
-          <div className="input">
-            {/* <input onChange={(e) => setSearch(e.target.value)}></input> */}
-          </div>
+          <div className="input"></div>
           <div className="genre">
-            <select onChange={(e) => setSelectedGenre(e.target.value)}>
-              {data.map((el) => (
-                <option>{el.genre_ids}</option>
-              ))}
-              {secondData.map((el) => (
-                <option>{el.genre_ids}</option>
-              ))}
-            </select>
+            <select onChange={(e) => setSelectedGenre(e.target.value)}></select>
           </div>
           <div className="datas">
             {secondData.length > 0
