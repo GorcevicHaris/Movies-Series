@@ -176,12 +176,18 @@ export default function HomePage() {
             gap: "10px",
           }}
         >
-          <div className="input"></div>
           <div className="genre">
-            <select
-              style={{ fontSize: "20px" }}
-              onChange={(e) => setSelectedGenre(e.target.value)}
-            >
+            <div className="movies">
+              <button onClick={getMoviesData} className="btn">
+                M o v i e s
+              </button>
+            </div>
+            <div className="series">
+              <button onClick={getTvData} className="btn">
+                S e r i e s
+              </button>
+            </div>
+            <select onChange={(e) => setSelectedGenre(e.target.value)}>
               <option selected disabled>
                 Genres
               </option>

@@ -58,20 +58,27 @@ span{
     display: flex;
 }
 .movies{
-    width: 24%;
+    width: 18%;
     height: 100%;
+    background-color: yellow;
 }
 .series{
-    width: 24%;
+    width: 18%;
     height: 100%;
+    background-color: red;
 }
 select{
     width: 200px;
     height: 100%;
     padding: 7px;
     font-weight: 500;
+    cursor: pointer;
 }
 
 option{
     font-size: 300px;
+}
+.btn{
+    width: 100%;
+    height: 100%;
 }
