@@ -50,3 +50,8 @@ h1{
 span{
     color: red;
 }
+.genre{
+    width: 90%;
+    height: 50px;
+    background-color: rebeccapurple;
+}

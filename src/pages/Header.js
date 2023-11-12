@@ -106,7 +106,16 @@ export default function Header() {
               style={{ textDecoration: "none", color: "white " }}
               to={"/"}
             >
-              MOVIES
+              <h1
+                style={{
+                  fontSize: "20px",
+                  fontWeight: "400",
+                  fontFamily: "Netflix Sans",
+                }}
+              >
+                {" "}
+                M O V I E S
+              </h1>
             </Link>
           </Typography>
           <Search>

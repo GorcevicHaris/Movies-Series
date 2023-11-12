@@ -73,6 +73,7 @@ export default function Data() {
               }}
             >
               {data.title}
+              {data.name}
             </Typography>
           }
           subheader={
@@ -84,6 +85,7 @@ export default function Data() {
               }}
             >
               {data.release_date}
+              {data.first_air_date}
             </Typography>
           }
         />

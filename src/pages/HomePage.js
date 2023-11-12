@@ -16,8 +16,17 @@ import Stack from "@mui/material/Stack";
 //api.themoviedb.org/ to je API
 ///3/discover/movie to je API call
 export default function HomePage() {
-  const { search, pagee, setPage, secondData, setSecondData } =
-    useContext(Kontext);
+  const {
+    search,
+    pagee,
+    setPage,
+    secondData,
+    setSecondData,
+    genre,
+    setGenre,
+    selectedGenre,
+    setSelectedGenre,
+  } = useContext(Kontext);
   const [result, setResult] = useState(10);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
@@ -42,6 +51,7 @@ export default function HomePage() {
             language: "en-US",
             page: pagee,
             sort_by: "popularity.desc",
+            with_genres: selectedGenre,
           },
           headers: {
             accept: "application/json",
@@ -64,6 +74,7 @@ export default function HomePage() {
             language: "en-US",
             page: pagee,
             sort_by: "popularity.desc",
+            with_genres: selectedGenre,
           },
           headers: {
             accept: "application/json",
@@ -78,7 +89,11 @@ export default function HomePage() {
   useEffect(() => {
     getMoviesData();
     getTvData();
-  }, [search, pagee]);
+  }, [search, pagee, selectedGenre]);
+  useEffect(() => {
+    getMoviesData();
+    getTvData();
+  }, []);
   console.log(data);
   return (
     <React.Fragment>
@@ -102,6 +117,16 @@ export default function HomePage() {
         >
           <div className="input">
             {/* <input onChange={(e) => setSearch(e.target.value)}></input> */}
+          </div>
+          <div className="genre">
+            <select onChange={(e) => setSelectedGenre(e.target.value)}>
+              {data.map((el) => (
+                <option>{el.genre_ids}</option>
+              ))}
+              {secondData.map((el) => (
+                <option>{el.genre_ids}</option>
+              ))}
+            </select>
           </div>
           <div className="datas">
             {secondData.length > 0
