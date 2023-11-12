@@ -34,7 +34,7 @@ export default function HomePage() {
   const [filterGenre2, setFilterGenre2] = useState([]);
   const navigate = useNavigate();
   const handlePageChange = (event, newPage) => {
-    console.log("event-", event, newPage);
+    console.log("event", event, newPage);
     setPage(newPage);
     // Scroll to the top of the page
     window.scrollTo({
@@ -54,6 +54,7 @@ export default function HomePage() {
             language: "en-US",
             page: pagee,
             sort_by: "popularity.desc",
+            with_genres: selectedGenre,
           },
           headers: {
             accept: "application/json",
@@ -63,17 +64,14 @@ export default function HomePage() {
         }
       )
       .then((response) => {
-        setData(response.data.results);
-        const maper = response.data.results;
-        const newmaper = maper.map((el) => el.genre_ids);
-        const uniqueArray = [...new Set(newmaper)];
-
-        // Konvertuj matricu u jednodimenzionalni niz
-        const flatArray = uniqueArray.flat(Infinity);
-        const uniqueSet = new Set(flatArray);
-        const unique = Array.from(uniqueSet);
-
-        setFilterGenre1(unique);
+        return setData(response.data.results);
+        // const maper = response.data.results;
+        // const newmaper = maper.map((el) => el.genre_ids);
+        // const uniqueArray = [...new Set(newmaper)];
+        // const flatArray = uniqueArray.flat(Infinity);
+        // const uniqueSet = new Set(flatArray);
+        // const unique = Array.from(uniqueSet);
+        // setFilterGenre1(unique);
       });
   }
   console.log(filterGenre1);
@@ -89,6 +87,7 @@ export default function HomePage() {
             language: "en-US",
             page: pagee,
             sort_by: "popularity.desc",
+            with_genres: selectedGenre,
           },
           headers: {
             accept: "application/json",
@@ -99,12 +98,15 @@ export default function HomePage() {
       )
       .then((response) => {
         setSecondData(response.data.results);
-        let Array = [...new Set(response.data.results.genre_ids)];
-        setFilterGenre2(Array);
+        // const maper = response.data.results;
+        // const newmaper = maper.map((el) => el.genre_ids);
+        // const uniqueArray = [...new Set(newmaper)];
+        // const flatArray = uniqueArray.flat(Infinity);
+        // const uniqueSet = new Set(flatArray);
+        // const uniquer = Array.from(uniqueSet);
+        // setFilterGenre2(uniquer);
       });
   }
-  console.log(filterGenre1);
-  console.log(filterGenre2);
 
   function getTvGenre() {
     axios
@@ -153,8 +155,7 @@ export default function HomePage() {
     getMovieGenre();
     getTvGenre();
   }, [search, pagee, selectedGenre]);
-
-  console.log(data);
+  console.log(secondData);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -177,7 +178,18 @@ export default function HomePage() {
         >
           <div className="input"></div>
           <div className="genre">
-            <select onChange={(e) => setSelectedGenre(e.target.value)}></select>
+            <select
+              style={{ fontSize: "20px" }}
+              onChange={(e) => setSelectedGenre(e.target.value)}
+            >
+              <option selected disabled>
+                Genres
+              </option>
+              {tvGenre &&
+                movieGenre.map((el) => (
+                  <option value={el.id}>{el.name}</option>
+                ))}
+            </select>
           </div>
           <div className="datas">
             {secondData.length > 0
@@ -211,8 +223,6 @@ export default function HomePage() {
               "& .Mui-selected": {
                 bgcolor: "#404040",
                 border: "1px solid #909090",
-
-                // Stilovi za označenu (trenutnu) stranicu
               },
             }}
             count={500}

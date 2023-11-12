@@ -52,6 +52,26 @@ span{
 }
 .genre{
     width: 90%;
-    height: 50px;
+    height: 40px;
     background-color: rebeccapurple;
+    margin-bottom: 40px;
+    display: flex;
+}
+.movies{
+    width: 24%;
+    height: 100%;
+}
+.series{
+    width: 24%;
+    height: 100%;
+}
+select{
+    width: 200px;
+    height: 100%;
+    padding: 7px;
+    font-weight: 500;
+}
+
+option{
+    font-size: 300px;
 }
