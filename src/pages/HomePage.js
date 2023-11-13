@@ -30,8 +30,8 @@ export default function HomePage() {
     setSelectedGenre,
   } = useContext(Kontext);
   const [data, setData] = useState([]);
-  const [filterGenre1, setFilterGenre1] = useState([]);
-  const [filterGenre2, setFilterGenre2] = useState([]);
+  const [movieData, setMovieData] = useState([]);
+  const [tvData, setTvData] = useState([]);
   const [dataType, setdataType] = useState("");
   const navigate = useNavigate();
   const handlePageChange = (event, newPage) => {
@@ -67,9 +67,10 @@ export default function HomePage() {
       .then((response) => {
         setData(response.data.results);
         setSecondData([]);
+        setTvData([]);
       });
   }
-  console.log(data);
+
   function getTvData() {
     axios
       .get(
@@ -92,10 +93,67 @@ export default function HomePage() {
         }
       )
       .then((response) => {
-        setSecondData(response.data.results);
-        setData([]);
+        {
+          setSecondData(response.data.results);
+          setData([]);
+          setMovieData([]);
+        }
       });
   }
+
+  function tv() {
+    axios
+      .get(
+        `https://api.themoviedb.org/3/${search ? "search" : "discover"}/tv`,
+        {
+          params: {
+            query: search,
+            include_adult: "false",
+            include_video: "false",
+            language: "en-US",
+            page: pagee,
+            sort_by: "popularity.desc",
+            with_genres: selectedGenre,
+          },
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
+          },
+        }
+      )
+      .then((response) => {
+        {
+          setTvData(response.data.results);
+        }
+      });
+  }
+  function movie() {
+    axios
+      .get(
+        `https://api.themoviedb.org/3/${search ? "search" : "discover"}/movie`,
+        {
+          params: {
+            query: search,
+            include_adult: "false",
+            include_video: "false",
+            language: "en-US",
+            page: pagee,
+            sort_by: "popularity.desc",
+            with_genres: selectedGenre,
+          },
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
+          },
+        }
+      )
+      .then((response) => {
+        setMovieData(response.data.results);
+      });
+  }
+  console.log(data);
 
   function getTvGenre() {
     axios
@@ -133,11 +191,13 @@ export default function HomePage() {
             "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
         },
       })
-      .then((response) => setMovieGenre(response.data.genres));
+      .then((response) => {
+        setMovieGenre(response.data.genres);
+      });
   }
   useEffect(() => {
-    getMoviesData();
-    getTvData();
+    movie();
+    tv();
     getMovieGenre();
     getTvGenre();
   }, [search, pagee, selectedGenre]);
@@ -185,26 +245,14 @@ export default function HomePage() {
             </select>
           </div>
           <div className="datas">
-            {data.length > 0 || setSecondData.length > 0 ? (
-              <>
-                {secondData.slice(0, 10).map((el) => (
-                  <Card product={el} />
-                ))}
-                {data.slice(0, 10).map((el) => (
-                  <Card product={el} />
-                ))}
-              </>
-            ) : (
-              <div className="no-data">
-                <h1 style={{ fontSize: "31px" }}>
-                  No result found for "<span>{search}</span>"".
-                </h1>
-                <h1>
-                  Please try searching by movie or series name,actor or
-                  character
-                </h1>
-              </div>
-            )}
+            <>
+              {data.slice(0, 10).map((el) => (
+                <Card product={el} />
+              ))}
+              {secondData.slice(0, 10).map((el) => (
+                <Card product={el} />
+              ))}
+            </>
           </div>
 
           <Pagination
