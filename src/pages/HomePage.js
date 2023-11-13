@@ -2,7 +2,7 @@ import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import axios, { getAdapter } from "axios";
+import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import "./homepage.css";
 import Card from "../components/Card";
@@ -11,10 +11,6 @@ import { useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
-//da prezentujem
-// http://www.omdbapi.com/?i=tt3896198&apikey=92faf84a
-//api.themoviedb.org/ to je API
-///3/discover/movie to je API call
 export default function HomePage() {
   const {
     search,
@@ -34,47 +30,21 @@ export default function HomePage() {
   const [tvData, setTvData] = useState([]);
   const [dataType, setdataType] = useState("");
   const navigate = useNavigate();
+
   const handlePageChange = (event, newPage) => {
-    console.log("event", event, newPage);
     setPage(newPage);
-    // Scroll to the top of the page
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   };
-  function getMoviesData() {
-    axios
-      .get(
-        `https://api.themoviedb.org/3/${search ? "search" : "discover"}/movie`,
-        {
-          params: {
-            query: search,
-            include_adult: "false",
-            include_video: "false",
-            language: "en-US",
-            page: pagee,
-            sort_by: "popularity.desc",
-            with_genres: selectedGenre,
-          },
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
-          },
-        }
-      )
-      .then((response) => {
-        setData(response.data.results);
-        setSecondData([]);
-        setTvData([]);
-      });
-  }
 
-  function getTvData() {
+  function getData(mediaType) {
     axios
       .get(
-        `https://api.themoviedb.org/3/${search ? "search" : "discover"}/tv`,
+        `https://api.themoviedb.org/3/${
+          search ? "search" : "discover"
+        }/${mediaType}`,
         {
           params: {
             query: search,
@@ -93,68 +63,76 @@ export default function HomePage() {
         }
       )
       .then((response) => {
-        {
+        if (mediaType === "movie") {
+          setData(response.data.results);
+          setSecondData([]);
+        } else if (mediaType === "tv") {
           setSecondData(response.data.results);
           setData([]);
-          setMovieData([]);
         }
       });
   }
 
   function tv() {
-    axios
-      .get(
-        `https://api.themoviedb.org/3/${search ? "search" : "discover"}/tv`,
-        {
-          params: {
-            query: search,
-            include_adult: "false",
-            include_video: "false",
-            language: "en-US",
-            page: pagee,
-            sort_by: "popularity.desc",
-            with_genres: selectedGenre,
-          },
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
-          },
-        }
-      )
-      .then((response) => {
-        {
-          setTvData(response.data.results);
-        }
-      });
+    getData("tv");
   }
-  function movie() {
-    axios
-      .get(
-        `https://api.themoviedb.org/3/${search ? "search" : "discover"}/movie`,
-        {
-          params: {
-            query: search,
-            include_adult: "false",
-            include_video: "false",
-            language: "en-US",
-            page: pagee,
-            sort_by: "popularity.desc",
-            with_genres: selectedGenre,
-          },
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
-          },
-        }
-      )
-      .then((response) => {
-        setMovieData(response.data.results);
-      });
-  }
-  console.log(data);
 
+  function movie() {
+    getData("movie");
+  }
+  function getAllData() {
+    axios
+      .all([
+        axios.get(
+          `https://api.themoviedb.org/3/${
+            search ? "search" : "discover"
+          }/movie`,
+          {
+            params: {
+              query: search,
+              include_adult: "false",
+              include_video: "false",
+              language: "en-US",
+              page: pagee,
+              sort_by: "popularity.desc",
+              with_genres: selectedGenre,
+            },
+            headers: {
+              accept: "application/json",
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
+            },
+          }
+        ),
+        axios.get(
+          `https://api.themoviedb.org/3/${search ? "search" : "discover"}/tv`,
+          {
+            params: {
+              query: search,
+              include_adult: "false",
+              include_video: "false",
+              language: "en-US",
+              page: pagee,
+              sort_by: "popularity.desc",
+              with_genres: selectedGenre,
+            },
+            headers: {
+              accept: "application/json",
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
+            },
+          }
+        ),
+      ])
+      .then(
+        axios.spread((movieResponse, tvResponse) => {
+          setSecondData(tvResponse.data.results);
+          setData(movieResponse.data.results);
+          setTvData(tvResponse.data.results);
+          setMovieData(movieResponse.data.results);
+        })
+      );
+  }
   function getTvGenre() {
     axios
       .get(`https://api.themoviedb.org/3/genre/tv/list`, {
@@ -174,6 +152,7 @@ export default function HomePage() {
       })
       .then((response) => setTvGenre(response.data.genres));
   }
+
   function getMovieGenre() {
     axios
       .get(`https://api.themoviedb.org/3/genre/movie/list`, {
@@ -195,14 +174,16 @@ export default function HomePage() {
         setMovieGenre(response.data.genres);
       });
   }
+
   useEffect(() => {
     movie();
-    tv();
     getMovieGenre();
     getTvGenre();
   }, [search, pagee, selectedGenre]);
-  console.log(data);
-  console.log(secondData);
+  //problem je sto u funkciji sta god zadnje ubacio u useffect to e da poziva zadnje po paginaciji ce samo to da racuna
+  useEffect(() => {
+    tv();
+  }, [pagee]);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -224,13 +205,18 @@ export default function HomePage() {
           }}
         >
           <div className="genre">
+            <div className="movies-series">
+              <button onClick={() => getAllData()} className="btn">
+                M O V I E S - S E R I E S
+              </button>
+            </div>
             <div className="movies">
-              <button onClick={getMoviesData} className="btn">
+              <button onClick={() => getData("movie")} className="btn">
                 M o v i e s
               </button>
             </div>
             <div className="series">
-              <button onClick={getTvData} className="btn">
+              <button onClick={() => getData("tv")} className="btn">
                 S e r i e s
               </button>
             </div>
@@ -240,25 +226,26 @@ export default function HomePage() {
               </option>
               {tvGenre &&
                 movieGenre.map((el) => (
-                  <option value={el.id}>{el.name}</option>
+                  <option value={el.id} key={el.id}>
+                    {el.name}
+                  </option>
                 ))}
             </select>
           </div>
           <div className="datas">
             <>
               {data.slice(0, 10).map((el) => (
-                <Card product={el} />
-              ))}
-              {secondData.slice(0, 10).map((el) => (
-                <Card product={el} />
+                <Card key={el.id} product={el} />
               ))}
             </>
+            {secondData.slice(0, 10).map((el) => (
+              <Card key={el.id} product={el} />
+            ))}
           </div>
 
           <Pagination
             sx={{
               "& .MuiPaginationItem-root": {
-                // Stilovi za pozadinu pojedinačnih dugmadi stranice
                 width: "50px",
                 height: "30px",
                 color: "white",
@@ -273,14 +260,6 @@ export default function HomePage() {
             count={500}
             onChange={handlePageChange}
           />
-          {/* <button
-            onClick={() => {
-              setPage(pagee + 1);
-              console.log(pagee);
-            }}
-          >
-            plus 1
-          </button> */}
         </Box>
       </Container>
     </React.Fragment>

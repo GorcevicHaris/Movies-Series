@@ -68,6 +68,11 @@ span{
     height: 100%;
     background-color: red;
 }
+.movies-series{
+    width: 18%;
+    height: 100%;
+    background-color: green
+}
 select{
     width: 200px;
     height: 100%;
