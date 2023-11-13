@@ -29,6 +29,7 @@ export default function HomePage() {
   const [movieData, setMovieData] = useState([]);
   const [tvData, setTvData] = useState([]);
   const [dataType, setdataType] = useState("");
+  const [tvOrMovie, setTvOrMovie] = useState("");
   const navigate = useNavigate();
 
   const handlePageChange = (event, newPage) => {
@@ -39,12 +40,12 @@ export default function HomePage() {
     });
   };
 
-  function getData(mediaType) {
+  function getData() {
     axios
       .get(
         `https://api.themoviedb.org/3/${
           search ? "search" : "discover"
-        }/${mediaType}`,
+        }/${tvOrMovie}`,
         {
           params: {
             query: search,
@@ -63,11 +64,14 @@ export default function HomePage() {
         }
       )
       .then((response) => {
-        if (mediaType === "movie") {
-          setData(response.data.results);
+        if (tvOrMovie === "movie") {
+          setMovieData(response.data.results);
+          setData([]);
+          setTvData([]);
+        } else if (tvOrMovie === "tv") {
+          setTvData(response.data.results);
+          setMovieData([]);
           setSecondData([]);
-        } else if (mediaType === "tv") {
-          setSecondData(response.data.results);
           setData([]);
         }
       });
@@ -126,10 +130,15 @@ export default function HomePage() {
       ])
       .then(
         axios.spread((movieResponse, tvResponse) => {
-          setSecondData(tvResponse.data.results);
-          setData(movieResponse.data.results);
-          setTvData(tvResponse.data.results);
-          setMovieData(movieResponse.data.results);
+          setTvOrMovie("");
+          let arr = [
+            ...movieResponse.data.results.slice(0, 10),
+            ...tvResponse.data.results.slice(0, 10),
+          ];
+
+          setData(arr);
+          setMovieData([]);
+          setTvData([]);
         })
       );
   }
@@ -176,10 +185,15 @@ export default function HomePage() {
   }
 
   useEffect(() => {
-    getAllData();
+    if (tvOrMovie) {
+      console.log(tvOrMovie);
+      getData();
+    } else {
+      getAllData();
+    }
     getTvGenre();
     getMovieGenre();
-  }, [search, pagee, selectedGenre]);
+  }, [search, pagee, selectedGenre, tvOrMovie]);
   //problem je sto u funkciji sta god zadnje ubacio u useffect to e da poziva zadnje po paginaciji ce samo to da racuna
   return (
     <React.Fragment>
@@ -203,20 +217,21 @@ export default function HomePage() {
         >
           <div className="genre">
             <div className="movies-series">
-              <button onClick={() => getAllData()} className="btn">
+              <button onClick={getAllData} className="btn">
                 M O V I E S - S E R I E S
               </button>
             </div>
-            <div className="movies">
-              <button onClick={() => getData("movie")} className="btn">
-                M o v i e s
-              </button>
-            </div>
             <div className="series">
-              <button onClick={() => getData("tv")} className="btn">
+              <button onClick={() => setTvOrMovie("tv")} className="btn">
                 S e r i e s
               </button>
             </div>
+            <div className="movies">
+              <button onClick={() => setTvOrMovie("movie")} className="btn">
+                M o v i e s
+              </button>
+            </div>
+
             <select onChange={(e) => setSelectedGenre(e.target.value)}>
               <option selected disabled>
                 Genres
@@ -231,11 +246,16 @@ export default function HomePage() {
           </div>
           <div className="datas">
             <>
-              {data.slice(0, 10).map((el) => (
+              {data.slice(0, 20).map((el) => (
                 <Card key={el.id} product={el} />
               ))}
             </>
-            {secondData.slice(0, 10).map((el) => (
+            <>
+              {movieData.slice(0, 10).map((el) => (
+                <Card key={el.id} product={el} />
+              ))}
+            </>
+            {tvData.slice(0, 10).map((el) => (
               <Card key={el.id} product={el} />
             ))}
           </div>
