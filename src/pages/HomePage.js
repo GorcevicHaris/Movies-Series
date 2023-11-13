@@ -176,14 +176,11 @@ export default function HomePage() {
   }
 
   useEffect(() => {
-    movie();
-    getMovieGenre();
+    getAllData();
     getTvGenre();
+    getMovieGenre();
   }, [search, pagee, selectedGenre]);
   //problem je sto u funkciji sta god zadnje ubacio u useffect to e da poziva zadnje po paginaciji ce samo to da racuna
-  useEffect(() => {
-    tv();
-  }, [pagee]);
   return (
     <React.Fragment>
       <CssBaseline />
