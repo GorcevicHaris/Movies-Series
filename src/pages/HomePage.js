@@ -36,7 +36,7 @@ export default function HomePage() {
     setPage(newPage);
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: "auto",
     });
   };
 
@@ -66,12 +66,11 @@ export default function HomePage() {
       .then((response) => {
         if (tvOrMovie === "movie") {
           setMovieData(response.data.results);
-          setData([]);
           setTvData([]);
+          setData([]);
         } else if (tvOrMovie === "tv") {
           setTvData(response.data.results);
           setMovieData([]);
-          setSecondData([]);
           setData([]);
         }
       });
@@ -190,6 +189,7 @@ export default function HomePage() {
       getData();
     } else {
       getAllData();
+      console.log(data);
     }
     getTvGenre();
     getMovieGenre();
@@ -246,9 +246,19 @@ export default function HomePage() {
           </div>
           <div className="datas">
             <>
-              {data.slice(0, 20).map((el) => (
-                <Card key={el.id} product={el} />
-              ))}
+              {data.length > 0 || movieData.length > 0 || tvData.length > 0 ? (
+                data.map((el) => <Card key={el.id} product={el} />)
+              ) : (
+                <div className="no-data">
+                  <h1 style={{ fontSize: "33px" }}>
+                    No result found for "<span>{search}</span>".
+                  </h1>
+                  <h4>
+                    Please try searching by series name ,movie,actor or
+                    character
+                  </h4>
+                </div>
+              )}
             </>
             <>
               {movieData.slice(0, 10).map((el) => (

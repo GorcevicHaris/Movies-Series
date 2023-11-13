@@ -46,6 +46,8 @@ h1{
     align-items: center;
     justify-content: center;
     gap: 20px;
+    background-color: black;
+    color: white;
 }
 span{
     color: red;
@@ -99,4 +101,8 @@ height: auto;
      align-items: center;
      justify-content: center;
      gap: 20px;
+}
+h4{
+    color: white;
+    font-size: 12px;
 }
