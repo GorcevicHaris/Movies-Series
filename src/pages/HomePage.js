@@ -2,7 +2,7 @@ import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import axios from "axios";
+import axios, { getAdapter } from "axios";
 import { useState, useEffect, useContext } from "react";
 import "./homepage.css";
 import Card from "../components/Card";
@@ -32,6 +32,7 @@ export default function HomePage() {
   const [data, setData] = useState([]);
   const [filterGenre1, setFilterGenre1] = useState([]);
   const [filterGenre2, setFilterGenre2] = useState([]);
+  const [dataType, setdataType] = useState("");
   const navigate = useNavigate();
   const handlePageChange = (event, newPage) => {
     console.log("event", event, newPage);
@@ -64,17 +65,11 @@ export default function HomePage() {
         }
       )
       .then((response) => {
-        return setData(response.data.results);
-        // const maper = response.data.results;
-        // const newmaper = maper.map((el) => el.genre_ids);
-        // const uniqueArray = [...new Set(newmaper)];
-        // const flatArray = uniqueArray.flat(Infinity);
-        // const uniqueSet = new Set(flatArray);
-        // const unique = Array.from(uniqueSet);
-        // setFilterGenre1(unique);
+        setData(response.data.results);
+        setSecondData([]);
       });
   }
-  console.log(filterGenre1);
+  console.log(data);
   function getTvData() {
     axios
       .get(
@@ -98,13 +93,7 @@ export default function HomePage() {
       )
       .then((response) => {
         setSecondData(response.data.results);
-        // const maper = response.data.results;
-        // const newmaper = maper.map((el) => el.genre_ids);
-        // const uniqueArray = [...new Set(newmaper)];
-        // const flatArray = uniqueArray.flat(Infinity);
-        // const uniqueSet = new Set(flatArray);
-        // const uniquer = Array.from(uniqueSet);
-        // setFilterGenre2(uniquer);
+        setData([]);
       });
   }
 
@@ -146,15 +135,13 @@ export default function HomePage() {
       })
       .then((response) => setMovieGenre(response.data.genres));
   }
-  console.log(tvGenre);
-  console.log(movieGenre);
-  console.log(secondData);
   useEffect(() => {
     getMoviesData();
     getTvData();
     getMovieGenre();
     getTvGenre();
   }, [search, pagee, selectedGenre]);
+  console.log(data);
   console.log(secondData);
   return (
     <React.Fragment>
@@ -198,11 +185,15 @@ export default function HomePage() {
             </select>
           </div>
           <div className="datas">
-            {secondData.length > 0
-              ? secondData.slice(0, 10).map((el) => <Card product={el} />)
-              : ""}
-            {data.length > 0 ? (
-              data.slice(0, 10).map((el) => <Card product={el} />)
+            {data.length > 0 || setSecondData.length > 0 ? (
+              <>
+                {secondData.slice(0, 10).map((el) => (
+                  <Card product={el} />
+                ))}
+                {data.slice(0, 10).map((el) => (
+                  <Card product={el} />
+                ))}
+              </>
             ) : (
               <div className="no-data">
                 <h1 style={{ fontSize: "31px" }}>
