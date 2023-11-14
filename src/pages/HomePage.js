@@ -10,6 +10,7 @@ import { Kontext } from "./Context";
 import { useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 
 export default function HomePage() {
   const {
@@ -185,11 +186,9 @@ export default function HomePage() {
 
   useEffect(() => {
     if (tvOrMovie) {
-      console.log(tvOrMovie);
       getData();
     } else {
       getAllData();
-      console.log(data);
     }
     getTvGenre();
     getMovieGenre();
@@ -217,21 +216,53 @@ export default function HomePage() {
         >
           <div className="genre">
             <div className="movies-series">
-              <button onClick={getAllData} className="btn">
+              <Button
+                onClick={getAllData}
+                className="btn"
+                sx={{
+                  color: "white",
+                  border: "2px solid rgb(35,35,35)",
+                  borderLeft: 0,
+                  borderTop: 0,
+                  borderRight: 0,
+                  borderRadius: 0,
+                }}
+              >
                 M O V I E S - S E R I E S
-              </button>
+              </Button>
             </div>
             <div className="series">
-              <button onClick={() => setTvOrMovie("tv")} className="btn">
+              <Button
+                onClick={() => setTvOrMovie("tv")}
+                className="btn"
+                sx={{
+                  color: "white",
+                  border: "2px solid rgb(35,35,35)",
+                  borderLeft: 0,
+                  borderTop: 0,
+                  borderRight: 0,
+                  borderRadius: 0,
+                }}
+              >
                 S e r i e s
-              </button>
+              </Button>
             </div>
             <div className="movies">
-              <button onClick={() => setTvOrMovie("movie")} className="btn">
+              <Button
+                sx={{
+                  color: "white",
+                  border: "2px solid rgb(35,35,35)",
+                  borderLeft: 0,
+                  borderTop: 0,
+                  borderRight: 0,
+                  borderRadius: 0,
+                }}
+                onClick={() => setTvOrMovie("movie")}
+                className="btn"
+              >
                 M o v i e s
-              </button>
+              </Button>
             </div>
-
             <select onChange={(e) => setSelectedGenre(e.target.value)}>
               <option selected disabled>
                 Genres

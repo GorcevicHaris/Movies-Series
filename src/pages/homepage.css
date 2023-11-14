@@ -55,32 +55,33 @@ span{
 .genre{
     width: 90%;
     height: 40px;
-    background-color: rebeccapurple;
     margin-bottom: 40px;
-    display: flex;
-    gap: 2px;
+    display: flex;    
+    justify-content: space-around;
 }
 .movies{
     width: 18%;
     height: 100%;
-    background-color: yellow;
 }
 .series{
     width: 18%;
     height: 100%;
-    background-color: red;
 }
 .movies-series{
     width: 18%;
     height: 100%;
-    background-color: green
 }
 select{
-    width: 200px;
+    width: 18%;
     height: 100%;
     padding: 7px;
     font-weight: 500;
     cursor: pointer;
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    border-bottom: 2px solid rgb(35,35,35);
 }
 
 option{
@@ -91,6 +92,7 @@ option{
     height: 100%;
     border-radius: 0;
     border: 0;
+    border: 2px solid gray;
 }
 
 .seconddatas{
