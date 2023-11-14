@@ -80,7 +80,6 @@ select{
     background-color: transparent;
     color: white;
     border: none;
-    border-radius: 5px;
     border-bottom: 2px solid rgb(35,35,35);
 }
 
@@ -96,13 +95,13 @@ option{
 }
 
 .seconddatas{
- width: 100%;
-height: auto;
-     display: flex;
-     flex-wrap: wrap;
-     align-items: center;
-     justify-content: center;
-     gap: 20px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
 }
 h4{
     color: white;

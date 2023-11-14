@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./data.css";
 import { Kontext } from "./Context";
 import { useParams } from "react-router-dom";
@@ -35,7 +35,7 @@ const ExpandMore = styled((props) => {
 export default function Data() {
   const { data } = useContext(Kontext);
   const [expanded, setExpanded] = React.useState(false);
-
+  const [falsing, setFalsing] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -48,7 +48,7 @@ export default function Data() {
     maxWidth: 750,
     maxHeight: "auto",
     zIndex: 10,
-    backgroundColor: "#484848",
+    backgroundColor: "black",
     color: "white",
   };
   console.log(data);
@@ -112,10 +112,15 @@ export default function Data() {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
+          <IconButton
+            sx={{ color: "white" }}
+            style={{ color: falsing ? "red" : "" }}
+            onClick={() => setFalsing(true)}
+            aria-label="add to favorites"
+          >
             <FavoriteIcon />
           </IconButton>
-          <IconButton aria-label="share">
+          <IconButton sx={{ color: "white" }} aria-label="share">
             <ShareIcon />
           </IconButton>
           <ExpandMore
@@ -124,7 +129,7 @@ export default function Data() {
             aria-expanded={expanded}
             aria-label="show more"
           >
-            <ExpandMoreIcon />
+            <ExpandMoreIcon sx={{ color: "white" }} />
           </ExpandMore>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
