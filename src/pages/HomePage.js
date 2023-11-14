@@ -25,8 +25,11 @@ export default function HomePage() {
     setMovieGenre,
     selectedGenre,
     setSelectedGenre,
+    data,
+    setData,
+    video,
+    setVideo,
   } = useContext(Kontext);
-  const [data, setData] = useState([]);
   const [movieData, setMovieData] = useState([]);
   const [tvData, setTvData] = useState([]);
   const [dataType, setdataType] = useState("");
@@ -51,7 +54,7 @@ export default function HomePage() {
           params: {
             query: search,
             include_adult: "false",
-            include_video: "false",
+            include_video: "true",
             language: "en-US",
             page: pagee,
             sort_by: "popularity.desc",
@@ -76,7 +79,7 @@ export default function HomePage() {
         }
       });
   }
-
+  console.log(data);
   function tv() {
     getData("tv");
   }
@@ -184,12 +187,29 @@ export default function HomePage() {
       });
   }
 
+  function video_mv_tv() {
+    axios
+      .get(`https://api.themoviedb.org/3/movie/3/videos?language=en-US`, {
+        params: {
+          include_video: "true",
+        },
+        headers: {
+          accept: "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
+        },
+      })
+      .then((response) => setVideo(response.data));
+  }
+  console.log(video);
+
   useEffect(() => {
     if (tvOrMovie) {
       getData();
     } else {
       getAllData();
     }
+    video_mv_tv();
     getTvGenre();
     getMovieGenre();
   }, [search, pagee, selectedGenre, tvOrMovie]);
@@ -214,6 +234,14 @@ export default function HomePage() {
             gap: "10px",
           }}
         >
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/ghuSkyWcmqg"
+            frameborder="0"
+            allowfullscreen
+          ></iframe>
+
           <div className="genre">
             <div className="movies-series">
               <Button

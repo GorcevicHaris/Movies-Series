@@ -61,7 +61,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Header() {
   const navigate = useNavigate();
-  const { setSearch, setPage, data } = React.useContext(Kontext);
+  const { setSearch, setPage, data, setData } = React.useContext(Kontext);
   const [value, setValue] = React.useState("");
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -73,6 +73,7 @@ export default function Header() {
   const handleMUILinkClick = () => {
     setSearch("");
     setPage(1);
+    setData(data);
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -106,16 +107,7 @@ export default function Header() {
               style={{ textDecoration: "none", color: "white " }}
               to={"/"}
             >
-              <h1
-                style={{
-                  fontSize: "20px",
-                  fontWeight: "400",
-                  fontFamily: "Netflix Sans",
-                }}
-              >
-                {" "}
-                M O V I E S
-              </h1>
+              M O V I E S
             </Link>
           </Typography>
           <Search>
