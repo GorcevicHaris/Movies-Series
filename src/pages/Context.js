@@ -10,7 +10,6 @@ function ContextFunction({ children }) {
   const [movieGenre, setMovieGenre] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
   const [secondData, setSecondData] = useState([]);
-  const [video, setVideo] = useState([]);
   return (
     <Kontext.Provider
       value={{
@@ -28,8 +27,6 @@ function ContextFunction({ children }) {
         setTvGenre,
         selectedGenre,
         setSelectedGenre,
-        video,
-        setVideo,
       }}
     >
       {children}

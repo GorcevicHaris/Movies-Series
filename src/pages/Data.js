@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./data.css";
 import { Kontext } from "./Context";
 import { useParams } from "react-router-dom";
@@ -20,6 +20,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { colors } from "@mui/material";
+import axios from "axios";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -33,6 +34,7 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function Data() {
+  const [ID, setID] = useState("");
   const { data } = useContext(Kontext);
   const [expanded, setExpanded] = React.useState(false);
   const [falsing, setFalsing] = useState(false);
@@ -51,7 +53,26 @@ export default function Data() {
     backgroundColor: "black",
     color: "white",
   };
+  function getExternalID(id) {
+    axios
+      .get(`https://api.themoviedb.org/3/movie/${id}`, {
+        params: {},
+        headers: {
+          accept: "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
+        },
+      })
+      .then((response) => {
+        setID(response.data.imdb_id);
+      });
+  }
   console.log(data);
+  console.log(ID);
+  useEffect(() => {
+    getExternalID(data.id);
+  }, []);
+  console.log(data.id);
   return (
     <div style={cardBackgroundStyle} className="data">
       <Card sx={cardStyle}>
@@ -80,7 +101,7 @@ export default function Data() {
             <Typography
               variant="subtitle1"
               sx={{
-                color: "#808080", // Replace "yourSubheaderColor" with your desired color
+                color: "#808080",
                 fontSize: "16px",
               }}
             >
@@ -89,23 +110,7 @@ export default function Data() {
             </Typography>
           }
         />
-        {data.backdrop_path ? (
-          <CardMedia
-            component="img"
-            height="auto"
-            sx={{
-              borderRadius: 0,
-              transform: "scale(1)",
-              color: "white",
-              filter: "brightness(0.8)",
-            }}
-            image={`https://image.tmdb.org/t/p/w342${data.backdrop_path}`}
-            alt="Paella dish"
-            color="white"
-          />
-        ) : (
-          ""
-        )}
+
         <CardContent>
           <Typography variant="body2" color="white">
             {data.overview}
@@ -148,3 +153,4 @@ export default function Data() {
     </div>
   );
 }
+//netlify

@@ -27,14 +27,10 @@ export default function HomePage() {
     setSelectedGenre,
     data,
     setData,
-    video,
-    setVideo,
   } = useContext(Kontext);
   const [movieData, setMovieData] = useState([]);
   const [tvData, setTvData] = useState([]);
-  const [dataType, setdataType] = useState("");
   const [tvOrMovie, setTvOrMovie] = useState("");
-  const navigate = useNavigate();
 
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
@@ -59,6 +55,7 @@ export default function HomePage() {
             page: pagee,
             sort_by: "popularity.desc",
             with_genres: selectedGenre,
+            append_to_response: "external_ids",
           },
           headers: {
             accept: "application/json",
@@ -80,13 +77,8 @@ export default function HomePage() {
       });
   }
   console.log(data);
-  function tv() {
-    getData("tv");
-  }
+  console.log(movieData);
 
-  function movie() {
-    getData("movie");
-  }
   function getAllData() {
     axios
       .all([
@@ -98,7 +90,7 @@ export default function HomePage() {
             params: {
               query: search,
               include_adult: "false",
-              include_video: "false",
+              include_video: "true",
               language: "en-US",
               page: pagee,
               sort_by: "popularity.desc",
@@ -122,6 +114,7 @@ export default function HomePage() {
               page: pagee,
               sort_by: "popularity.desc",
               with_genres: selectedGenre,
+              append_to_response: "external_ids",
             },
             headers: {
               accept: "application/json",
@@ -145,6 +138,7 @@ export default function HomePage() {
         })
       );
   }
+
   function getTvGenre() {
     axios
       .get(`https://api.themoviedb.org/3/genre/tv/list`, {
@@ -170,8 +164,8 @@ export default function HomePage() {
       .get(`https://api.themoviedb.org/3/genre/movie/list`, {
         params: {
           query: search,
-          include_adult: "false",
-          include_video: "false",
+          include_adult: "true",
+          include_video: "true",
           language: "en-US",
           page: pagee,
           sort_by: "popularity.desc",
@@ -187,21 +181,24 @@ export default function HomePage() {
       });
   }
 
-  function video_mv_tv() {
-    axios
-      .get(`https://api.themoviedb.org/3/movie/3/videos?language=en-US`, {
-        params: {
-          include_video: "true",
-        },
-        headers: {
-          accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
-        },
-      })
-      .then((response) => setVideo(response.data));
-  }
-  console.log(video);
+  // function video_mv_tv() {
+  //   axios
+  //     .get(`https://api.themoviedb.org/3/movie/3/videos?language=en-US`, {
+  //       params: {
+  //         include_video: "true",
+  //         append_to_response: "videos",
+  //         api_key: process.env.REACT_APP_MOVIE_API_KEY,
+  //         key: "9324f6f6f4831305638c7610def91015",
+  //       },
+  //       headers: {
+  //         accept: "application/json",
+  //         Authorization:
+  //           "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
+  //       },
+  //     })
+  //     .then((response) => setVideo(response.data));
+  // }
+  // console.log(video);
 
   useEffect(() => {
     if (tvOrMovie) {
@@ -209,7 +206,7 @@ export default function HomePage() {
     } else {
       getAllData();
     }
-    video_mv_tv();
+    // video_mv_tv();
     getTvGenre();
     getMovieGenre();
   }, [search, pagee, selectedGenre, tvOrMovie]);
@@ -234,13 +231,13 @@ export default function HomePage() {
             gap: "10px",
           }}
         >
-          <iframe
+          {/* <iframe
             width="560"
             height="315"
-            src="https://www.youtube.com/embed/ghuSkyWcmqg"
+            src="https://www.youtube.com/embed/bOYvq-Sj4Ls"
             frameborder="0"
             allowfullscreen
-          ></iframe>
+          ></iframe> */}
 
           <div className="genre">
             <div className="movies-series">

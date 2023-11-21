@@ -13,7 +13,11 @@
     position: relative;
 
 }
-
+iframe {
+    aspect-ratio: 2/1;
+    width: 100%;
+    border: 0;
+}
 .data{
     background-size:cover; /* Postavljanje veličine slike */
 }
