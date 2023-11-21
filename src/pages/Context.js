@@ -9,7 +9,9 @@ function ContextFunction({ children }) {
   const [tvGenre, setTvGenre] = useState([]);
   const [movieGenre, setMovieGenre] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
-  const [secondData, setSecondData] = useState([]);
+  const [movieData, setMovieData] = useState([]);
+  const [tvData, setTvData] = useState([]);
+  const [tvOrMovie, setTvOrMovie] = useState("");
   return (
     <Kontext.Provider
       value={{
@@ -19,14 +21,18 @@ function ContextFunction({ children }) {
         setData,
         pagee,
         setPage,
-        secondData,
-        setSecondData,
         movieGenre,
         setMovieGenre,
         tvGenre,
         setTvGenre,
         selectedGenre,
         setSelectedGenre,
+        movieData,
+        setMovieData,
+        tvData,
+        setTvData,
+        tvOrMovie,
+        setTvOrMovie,
       }}
     >
       {children}

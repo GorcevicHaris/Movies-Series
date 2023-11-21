@@ -35,7 +35,16 @@ const ExpandMore = styled((props) => {
 
 export default function Data() {
   const [ID, setID] = useState("");
-  const { data } = useContext(Kontext);
+  const {
+    data,
+    movieData,
+    setMovieData,
+    tvData,
+    setTvData,
+    tvOrMovie,
+    setTvOrMovie,
+  } = useContext(Kontext);
+  const [tvORmv, setTvOrMv] = useState("");
   const [expanded, setExpanded] = React.useState(false);
   const [falsing, setFalsing] = useState(false);
   const handleExpandClick = () => {
@@ -53,26 +62,30 @@ export default function Data() {
     backgroundColor: "black",
     color: "white",
   };
-  function getExternalID(id) {
+  function getExternalID() {
     axios
-      .get(`https://api.themoviedb.org/3/movie/${id}`, {
-        params: {},
-        headers: {
-          accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
-        },
-      })
+      .get(
+        `https://api.themoviedb.org/3/${data.original_name ? "tv" : "movie"}/${
+          data.id
+        }`,
+        {
+          params: {},
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
+          },
+        }
+      )
       .then((response) => {
-        setID(response.data.imdb_id);
+        setID(response.data.id);
       });
   }
   console.log(data);
   console.log(ID);
   useEffect(() => {
-    getExternalID(data.id);
+    getExternalID();
   }, []);
-  console.log(data.id);
   return (
     <div style={cardBackgroundStyle} className="data">
       <Card sx={cardStyle}>
@@ -110,7 +123,7 @@ export default function Data() {
             </Typography>
           }
         />
-
+        <iframe src={`https://vidsrc.me/embed/${ID}`} allowFullScreen></iframe>
         <CardContent>
           <Typography variant="body2" color="white">
             {data.overview}

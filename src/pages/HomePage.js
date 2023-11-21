@@ -17,8 +17,6 @@ export default function HomePage() {
     search,
     pagee,
     setPage,
-    secondData,
-    setSecondData,
     tvGenre,
     setTvGenre,
     movieGenre,
@@ -27,10 +25,13 @@ export default function HomePage() {
     setSelectedGenre,
     data,
     setData,
+    movieData,
+    setMovieData,
+    tvData,
+    setTvData,
+    tvOrMovie,
+    setTvOrMovie,
   } = useContext(Kontext);
-  const [movieData, setMovieData] = useState([]);
-  const [tvData, setTvData] = useState([]);
-  const [tvOrMovie, setTvOrMovie] = useState("");
 
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
@@ -78,6 +79,7 @@ export default function HomePage() {
   }
   console.log(data);
   console.log(movieData);
+  console.log(tvData);
 
   function getAllData() {
     axios
@@ -181,32 +183,12 @@ export default function HomePage() {
       });
   }
 
-  // function video_mv_tv() {
-  //   axios
-  //     .get(`https://api.themoviedb.org/3/movie/3/videos?language=en-US`, {
-  //       params: {
-  //         include_video: "true",
-  //         append_to_response: "videos",
-  //         api_key: process.env.REACT_APP_MOVIE_API_KEY,
-  //         key: "9324f6f6f4831305638c7610def91015",
-  //       },
-  //       headers: {
-  //         accept: "application/json",
-  //         Authorization:
-  //           "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
-  //       },
-  //     })
-  //     .then((response) => setVideo(response.data));
-  // }
-  // console.log(video);
-
   useEffect(() => {
     if (tvOrMovie) {
       getData();
     } else {
       getAllData();
     }
-    // video_mv_tv();
     getTvGenre();
     getMovieGenre();
   }, [search, pagee, selectedGenre, tvOrMovie]);
@@ -231,14 +213,6 @@ export default function HomePage() {
             gap: "10px",
           }}
         >
-          {/* <iframe
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/bOYvq-Sj4Ls"
-            frameborder="0"
-            allowfullscreen
-          ></iframe> */}
-
           <div className="genre">
             <div className="movies-series">
               <Button
