@@ -190,7 +190,6 @@ export default function HomePage() {
     getTvGenre();
     getMovieGenre();
   }, [search, pagee, selectedGenre, tvOrMovie]);
-  //problem je sto u funkciji sta god zadnje ubacio u useffect to e da poziva zadnje po paginaciji ce samo to da racuna
   return (
     <React.Fragment>
       <CssBaseline />
@@ -204,7 +203,6 @@ export default function HomePage() {
             padding: 0,
             display: "flex",
             flexDirection: "column",
-            gap: "20px",
             alignItems: "center",
             justifyContent: "center",
             p: "20px",
