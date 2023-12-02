@@ -10,7 +10,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { Kontext } from "./Context";
 import { Link, useNavigate } from "react-router-dom";
-import HomePage from "./HomePage";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,

@@ -3,13 +3,11 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import axios from "axios";
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import "./homepage.css";
 import Card from "../components/Card";
 import { Kontext } from "./Context";
-import { useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
 export default function HomePage() {
