@@ -18,6 +18,7 @@ export default function Footer() {
           <ul class="footer-list">
             <li>
               <a
+                rel="noreferrer"
                 class="footer-link"
                 target="_blank"
                 href="https://www.animesrbija.com/"
@@ -27,6 +28,7 @@ export default function Footer() {
             </li>
             <li>
               <a
+                rel="noreferrer"
                 class="footer-link"
                 target="_blank"
                 href="https://www.filmovi.me/"
@@ -36,6 +38,7 @@ export default function Footer() {
             </li>
             <li>
               <a
+                rel="noreferrer"
                 class="footer-link"
                 target="_blank"
                 href="https://www.popcornfilmovi.com/"
@@ -45,6 +48,7 @@ export default function Footer() {
             </li>
             <li>
               <a
+                rel="noreferrer"
                 class="footer-link"
                 target="_blank"
                 href="https://gledalica.online/"

@@ -30,7 +30,6 @@ const ExpandMore = styled((props) => {
 export default function Data() {
   const [ID, setID] = useState("");
   const { data } = useContext(Kontext);
-  const [tvORmv, setTvOrMv] = useState("");
   const [expanded, setExpanded] = React.useState(false);
   const [falsing, setFalsing] = useState(false);
   const handleExpandClick = () => {
@@ -69,7 +68,7 @@ export default function Data() {
   }
   useEffect(() => {
     getExternalID();
-  }, []);
+  });
   return (
     <div style={cardBackgroundStyle} className="data">
       <Card sx={cardStyle}>
@@ -83,7 +82,6 @@ export default function Data() {
             <Typography
               variant="h5"
               sx={{
-                color: "yourColor",
                 fontWeight: "bold",
                 fontFamily: "initial",
                 fontSize: "27px",
@@ -107,7 +105,11 @@ export default function Data() {
             </Typography>
           }
         />
-        <iframe src={`https://vidsrc.me/embed/${ID}`} allowFullScreen></iframe>
+        <iframe
+          title="one"
+          src={`https://vidsrc.me/embed/${ID}`}
+          allowFullScreen
+        ></iframe>
         <CardContent>
           <Typography variant="body2" color="white">
             {data.overview}

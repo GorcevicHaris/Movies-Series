@@ -14,6 +14,7 @@ function Card({ product }) {
       className="card"
     >
       <img
+        alt=""
         className="images"
         src={`https://image.tmdb.org/t/p/w342${product.poster_path}`}
       ></img>
