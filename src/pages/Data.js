@@ -29,15 +29,7 @@ const ExpandMore = styled((props) => {
 
 export default function Data() {
   const [ID, setID] = useState("");
-  const {
-    data,
-    movieData,
-    setMovieData,
-    tvData,
-    setTvData,
-    tvOrMovie,
-    setTvOrMovie,
-  } = useContext(Kontext);
+  const { data } = useContext(Kontext);
   const [tvORmv, setTvOrMv] = useState("");
   const [expanded, setExpanded] = React.useState(false);
   const [falsing, setFalsing] = useState(false);
@@ -75,8 +67,6 @@ export default function Data() {
         setID(response.data.id);
       });
   }
-  console.log(data);
-  console.log(ID);
   useEffect(() => {
     getExternalID();
   }, []);
