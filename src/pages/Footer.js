@@ -62,16 +62,16 @@ export default function Footer() {
           <div class="footer-title">USEFUL LINKS</div>
           <ul class="footer-list">
             <li>
-              <a class="footer-link">Pricing</a>
+              <p class="footer-link">Pricing</p>
             </li>
             <li>
-              <a class="footer-link">Settings</a>
+              <p class="footer-link">Settings</p>
             </li>
             <li>
-              <a class="footer-link">Orders</a>
+              <p class="footer-link">Orders</p>
             </li>
             <li>
-              <a class="footer-link">Help</a>
+              <p class="footer-link">Help</p>
             </li>
           </ul>
         </div>
