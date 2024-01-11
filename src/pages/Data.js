@@ -35,6 +35,7 @@ export default function Data() {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  console.log(data, "data");
 
   const cardBackgroundStyle = {
     backgroundImage: `url(https://image.tmdb.org/t/p/w342${data.backdrop_path})`,
@@ -47,28 +48,7 @@ export default function Data() {
     backgroundColor: "black",
     color: "white",
   };
-  function getExternalID() {
-    axios
-      .get(
-        `https://api.themoviedb.org/3/${data.original_name ? "tv" : "movie"}/${
-          data.id
-        }`,
-        {
-          params: {},
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
-          },
-        }
-      )
-      .then((response) => {
-        setID(response.data.id);
-      });
-  }
-  useEffect(() => {
-    getExternalID();
-  });
+
   return (
     <div style={cardBackgroundStyle} className="data">
       <Card sx={cardStyle}>
@@ -107,7 +87,7 @@ export default function Data() {
         />
         <iframe
           title="one"
-          src={`https://vidsrc.me/embed/${ID}`}
+          src={`https://vidsrc.me/embed/${data.id}`}
           allowFullScreen
         ></iframe>
         <CardContent>

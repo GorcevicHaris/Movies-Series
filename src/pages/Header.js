@@ -106,7 +106,7 @@ export default function Header() {
               style={{ textDecoration: "none", color: "white " }}
               to={"/"}
             >
-              M O V I E S
+              M O V I E S & S E R I E S
             </Link>
           </Typography>
           <Search>

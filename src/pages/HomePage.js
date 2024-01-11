@@ -271,7 +271,6 @@ export default function HomePage() {
             </select>
           </div>
           <div className="datas">
-            {/*  */}
             <>
               {data.length > 0 || movieData.length > 0 || tvData.length > 0 ? (
                 data.map((el) => <Card key={el.id} product={el} />)
