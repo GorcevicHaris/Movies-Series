@@ -3,6 +3,8 @@ import "./login.css";
 import { useNavigate } from "react-router-dom";
 import Validation from "../Validation/LoginValidation";
 export default function Login() {
+  const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -10,7 +12,7 @@ export default function Login() {
 
   function handleInputSubmit(event) {
     event.preventDefault();
-    setValues(Validation(values));
+    setErrors(Validation(values));
   }
 
   function handleInput(event) {
@@ -20,23 +22,36 @@ export default function Login() {
     }));
   }
 
-  const navigate = useNavigate();
   return (
     <div className="Big">
       <div className="Logincontainer">
         <h1>Sign-Up</h1>
-        <form>
+        <form onSubmit={handleInputSubmit}>
           <div className="form-group">
             <strong>
               <label>Email:</label>
             </strong>
-            <input type="email" placeholder="Enter your email adress" />
+            <input
+              onChange={handleInput}
+              type="email"
+              placeholder="Enter your email adress"
+            />
+            {errors.email && (
+              <span style={{ color: "red" }}>{errors.email}</span>
+            )}
           </div>
           <div className="form-group">
             <strong>
               <label>Password:</label>
             </strong>
-            <input type="password" placeholder="Enter your password" />
+            <input
+              onChange={handleInput}
+              type="password"
+              placeholder="Enter your password"
+            />
+            {errors.password && (
+              <span style={{ color: "red" }}>{errors.password}</span>
+            )}
           </div>
           <button onClick={() => navigate("/signup")} type="submit">
             Sign up{" "}

@@ -3,6 +3,7 @@ import "./signup.css";
 import { useNavigate } from "react-router-dom";
 import Validation from "../Validation/SignUpValidation";
 export default function SignUp() {
+  const [errors, setError] = useState({});
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -18,7 +19,7 @@ export default function SignUp() {
 
   function handleInputSubmit(event) {
     event.preventDefault();
-    setValues(Validation(values));
+    setError(Validation(values));
   }
 
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ export default function SignUp() {
               placeholder="Enter your Name "
               name="name"
             />
+            {errors.name && <span style={{ color: "red" }}>{errors.name}</span>}
           </div>
           <div className="form-group">
             <strong>
@@ -48,6 +50,9 @@ export default function SignUp() {
               placeholder="Enter your email adress"
               name="email"
             />
+            {errors.email && (
+              <span style={{ color: "red" }}>{errors.email}</span>
+            )}
           </div>
           <div className="form-group">
             <strong>
@@ -59,9 +64,12 @@ export default function SignUp() {
               placeholder="Enter your password"
               name="password"
             />
+            {errors.password && (
+              <span style={{ color: "red" }}>{errors.password}</span>
+            )}
           </div>
           <button onSubmit={() => navigate("/")} type="submit">
-            Sign up{" "}
+            Sign up
           </button>
           <p style={{ paddingLeft: "20px" }}>
             You are agree to aour terms and policies
