@@ -48,7 +48,7 @@ export default function Data() {
     backgroundColor: "black",
     color: "white",
   };
-
+  //
   return (
     <div style={cardBackgroundStyle} className="data">
       <Card sx={cardStyle}>
