@@ -4,6 +4,8 @@ import HomePage from "./pages/HomePage";
 import Layout from "./pages/Layout";
 import ContextFunction from "./pages/Context";
 import Data from "./pages/Data";
+import SignUp from "./SignUpFolder/SignUp";
+import Login from "./LoginFolder/Login";
 
 function App() {
   return (
@@ -11,7 +13,9 @@ function App() {
       <ContextFunction>
         <Layout>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/home" element={<HomePage />} />
             <Route path="/data/:info" element={<Data />} />
           </Routes>
         </Layout>
