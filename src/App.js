@@ -13,9 +13,7 @@ function App() {
       <ContextFunction>
         <Layout>
           <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/home" element={<HomePage />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/data/:info" element={<Data />} />
           </Routes>
         </Layout>

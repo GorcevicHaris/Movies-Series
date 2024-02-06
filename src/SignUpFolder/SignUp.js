@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import "./signup.css";
 import { useNavigate } from "react-router-dom";
 import Validation from "../Validation/SignUpValidation";
-export default function SignUp() {
-  const [errors, setError] = useState({});
+import axios from "axios";
+function SignUp() {
+  const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -16,23 +17,36 @@ export default function SignUp() {
       [event.target.name]: [event.target.value],
     }));
   }
+  // console.log(values);
 
   function handleInputSubmit(event) {
     event.preventDefault();
-    setError(Validation(values));
+    setErrors(Validation(values));
+    if (errors.name === "" && errors.email === "" && errors.password === "") {
+      axios
+        .post("http://localhost:8071/sign_up", values)
+        .then((res) => {
+          navigate("/");
+          console.log(res);
+        })
+        .catch((err) => console.log(err, "err"));
+    }
   }
 
   const navigate = useNavigate();
   return (
     <div className="Big">
       <div className="Logincontainer">
-        <h1>Sign-Up</h1>
+        <strong>
+          <h1 style={{ fontSize: "25px" }}>Sign-Up</h1>
+        </strong>
         <form onSubmit={handleInputSubmit}>
           <div className="form-group">
             <strong>
               <label>Name:</label>
             </strong>
             <input
+              className="inp2"
               onChange={handleInput}
               type="name"
               placeholder="Enter your Name "
@@ -45,6 +59,7 @@ export default function SignUp() {
               <label>Email:</label>
             </strong>
             <input
+              className="inp2"
               onChange={handleInput}
               type="email"
               placeholder="Enter your email adress"
@@ -59,6 +74,7 @@ export default function SignUp() {
               <label>Password:</label>
             </strong>
             <input
+              className="inp2"
               onChange={handleInput}
               type="password"
               placeholder="Enter your password"
@@ -68,13 +84,17 @@ export default function SignUp() {
               <span style={{ color: "red" }}>{errors.password}</span>
             )}
           </div>
-          <button onSubmit={() => navigate("/")} type="submit">
+          <button className="btn2" type="submit">
             Sign up
           </button>
-          <p style={{ paddingLeft: "20px" }}>
+          <p style={{ paddingLeft: "100px", color: "red" }}>
             You are agree to aour terms and policies
           </p>
-          <button onClick={() => navigate("/")} type="button">
+          <button
+            className="btn2 btn3"
+            onClick={() => navigate("/")}
+            type="button"
+          >
             Login
           </button>
         </form>
@@ -82,3 +102,4 @@ export default function SignUp() {
     </div>
   );
 }
+export default SignUp;

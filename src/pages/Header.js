@@ -9,7 +9,9 @@ import InputBase from "@mui/material/InputBase";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { Kontext } from "./Context";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -59,6 +61,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
+  const [auth, setAuth] = useState(false);
+  const [message, setMessage] = useState("");
+  const [name, setName] = useState("");
   const navigate = useNavigate();
   const { setSearch, setPage, data, setData } = React.useContext(Kontext);
   const [value, setValue] = React.useState("");
@@ -66,7 +71,7 @@ export default function Header() {
     if (event.key === "Enter") {
       setSearch(value);
       setValue("");
-      navigate("/");
+      navigate("/home");
     }
   };
   const handleMUILinkClick = () => {
@@ -74,6 +79,29 @@ export default function Header() {
     setPage(1);
     setData(data);
   };
+
+  // axios.default.withCredentials = true;
+  // useEffect(() => {
+  //   axios.get("http://localhost:8071").then((res) => {
+  //     if (res.data === "Success") {
+  //       setAuth(true);
+  //       navigate("/");
+  //       setName(res.data.name);
+  //     } else {
+  //       setAuth(false);
+  //       setMessage(res.data.Error);
+  //     }
+  //   });
+  // }, []);
+
+  // function deleteHandler() {
+  //   axios
+  //     .get("http://localhost:8071/logout")
+  //     .then((res) => {
+  //       window.location.reload(true);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -103,12 +131,13 @@ export default function Header() {
           >
             <Link
               onClick={handleMUILinkClick}
-              style={{ textDecoration: "none", color: "white " }}
+              style={{ textDecoration: "none", color: "white" }}
               to={"/"}
             >
               M O V I E S & S E R I E S
             </Link>
           </Typography>
+
           <Search>
             <SearchIconWrapper>
               <SearchIcon />

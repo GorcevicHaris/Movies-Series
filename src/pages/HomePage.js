@@ -73,6 +73,10 @@ export default function HomePage() {
           setMovieData([]);
           setData([]);
         }
+      })
+      .catch((error) => {
+        console.error("Error in getAllData:", error);
+        // Handle the error (e.g., show an error message to the user)
       });
   }
   console.log(data);
@@ -136,9 +140,12 @@ export default function HomePage() {
           setMovieData([]);
           setTvData([]);
         })
-      );
+      )
+      .catch((error) => {
+        console.error("Error in getAllData:", error);
+        // Handle the error (e.g., show an error message to the user)
+      });
   }
-
   function getTvGenre() {
     axios
       .get(`https://api.themoviedb.org/3/genre/tv/list`, {
@@ -156,7 +163,11 @@ export default function HomePage() {
             "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MzI0ZjZmNmY0ODMxMzA1NjM4Yzc2MTBkZWY5MTAxNSIsInN1YiI6IjY1NGJlZDQ0ZmQ0ZjgwMDBjN2ZlODU1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JeufyP_mNhGUJVvJ5RSSjvUVACQBVphLxHz4Ps7CKOI",
         },
       })
-      .then((response) => setTvGenre(response.data.genres));
+      .then((response) => setTvGenre(response.data.genres))
+      .catch((error) => {
+        console.error("Error in getAllData:", error);
+        // Handle the error (e.g., show an error message to the user)
+      });
   }
 
   function getMovieGenre() {
@@ -178,6 +189,10 @@ export default function HomePage() {
       })
       .then((response) => {
         setMovieGenre(response.data.genres);
+      })
+      .catch((error) => {
+        console.error("Error in getAllData:", error);
+        // Handle the error (e.g., show an error message to the user)
       });
   }
 

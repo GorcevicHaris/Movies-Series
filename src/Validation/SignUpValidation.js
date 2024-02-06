@@ -7,19 +7,19 @@ function SignUpValidation(values) {
   if (values.name === "") {
     error.name = "Mora imati par slova";
   } else {
-    error.name = "ok je";
+    error.name = "";
   }
 
   if (values.email === "") {
     error.email = "Name should not be empty";
-  } else if (!email_Pattern.test(values)) {
+  } else if (!email_Pattern.test(values.email)) {
     error.email = "Email does not match";
   } else {
     error.email = "";
   }
   if (values.password === "") {
     error.password = "Password cant be 0 words";
-  } else if (!password_Pattern.test(values)) {
+  } else if (!password_Pattern.test(values.password)) {
     error.password = "Password don't match";
   } else {
     error.password = "";
